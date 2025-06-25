@@ -809,9 +809,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stage: 0
-  TileManager: {fileID: 3091704986624679322, guid: 205627a263c966f468d5fd831e0df894, type: 3}
-  ElementManager: {fileID: 792701204763863931, guid: 96793ae13e08c714caed8eee81f50528, type: 3}
-  GoalElementManager: {fileID: -6757727765250863774, guid: 1b9b4f248e6c52246acb9ed524271372, type: 3}
+  tileManager: {fileID: 3091704986624679322, guid: 205627a263c966f468d5fd831e0df894, type: 3}
+  cloneTileManager: {fileID: -7811344025497076380, guid: e739e54f3f343bb4bb49d320f1c2f82b, type: 3}
+  elementManager: {fileID: 792701204763863931, guid: 96793ae13e08c714caed8eee81f50528, type: 3}
+  goalElementManager: {fileID: -6757727765250863774, guid: 1b9b4f248e6c52246acb9ed524271372, type: 3}
   tpm: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

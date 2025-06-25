@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameCtrler : MonoBehaviour
 {
     [SerializeField] int stage;
-    [SerializeField] TileManager TileManager;
-    [SerializeField] ElementManager ElementManager;
-    [SerializeField] GoalElementManager GoalElementManager;
+    [SerializeField] TileManager tileManager;
+    [SerializeField] TileManager cloneTileManager;
+    [SerializeField] ElementManager elementManager;
+    [SerializeField] GoalElementManager goalElementManager;
     [SerializeField] TilePieceManager tpm;
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
@@ -21,12 +23,12 @@ public class GameCtrler : MonoBehaviour
             -1,
             -1,
             -1,
-            0,0,0,0,0,1,1,1,3,-1,
+            0,0,0,0,0,1,99,1,3,-1,
             0,0,0,0,0,0,0,0,1,-1,
             0,0,0,0,0,0,0,0,1,-1,
             0,0,0,0,0,0,0,0,1,-1,
             0,0,0,0,0,0,0,0,1,-1,
-            0,0,0,0,0,0,0,0,2,1,1,1,1,-1,
+            0,0,0,0,0,0,0,0,99,1,1,1,1,-1,
             -1,
             -1,
             -1,
@@ -38,6 +40,7 @@ public class GameCtrler : MonoBehaviour
     int[] elementCount = { 2, 1, 1, 2 };
     int[,] elementSpos = { { -3, -5, 1 },{-3,-3,1 } };
     int[,] elementGpos = { { 2, 2 },{2,0 } };
+    int eTileCount = 0;
     void Start()
     {
         gc = GetComponent<GameCtrler>();
@@ -57,17 +60,23 @@ public class GameCtrler : MonoBehaviour
                     ind++;
                     continue;
                 }
+                else if (stageinfo[stage, ind] == 99)
+                {
+                    tileManager.SetTile(x, y, 1);
+                    ind++;
+                }
                 else
                 {
-                    TileManager.SetTile(x, y, stageinfo[stage, ind]);
+                    tileManager.SetTile(x, y, stageinfo[stage, ind] + 1);
                     ind++;
+                    eTileCount++;
                 }
             }
         }
         for (int i = 0; i < elementCount[stage]; i++)
         {
-            GoalElementManager.SetElement(elementGpos[i, 0], elementGpos[i, 1], i);
-            ElementManager.SetElement(elementSpos[i, 0], elementSpos[i, 1], i, elementSpos[i, 2],gc);
+            goalElementManager.SetElement(elementGpos[i, 0], elementGpos[i, 1], i);
+            elementManager.SetElement(elementSpos[i, 0], elementSpos[i, 1], i, elementSpos[i, 2],gc);
         }
         for(int i = 0; i < tileinfo[stage]; i++)
         {
@@ -89,5 +98,27 @@ public class GameCtrler : MonoBehaviour
     public int GetStage()
     {
         return stage;
+    }
+    public float GetDis( Vector3 tp)
+    {
+        float[] dis = { };
+        float fDis = 999.9f;
+        for (int i = 0; i < eTileCount; i++)
+        {
+            Vector3 targetPos = cloneTileManager.GetPos(i);
+            dis[i] = Vector3.Distance(tp, targetPos);
+        }
+        fDis = dis[0];
+        for(int i = 0; i < dis.Length - 1; i++)
+        {
+            for(int j = i + 1; j < dis.Length; j++)
+            {
+                if (dis[i] >= dis[j])
+                {
+                    fDis = dis[j];
+                }
+            }
+        }
+        return fDis;
     }
 }

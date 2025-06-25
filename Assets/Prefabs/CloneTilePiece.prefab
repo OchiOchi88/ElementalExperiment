@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8238895254087248891}
   - component: {fileID: 5567846352069329277}
-  - component: {fileID: 3091704986624679322}
+  - component: {fileID: 5535234593570834359}
+  - component: {fileID: 5171910969392544877}
+  - component: {fileID: -1728435617469239251}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: CloneTilePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.75, y: 1.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -73,8 +75,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 8228edc06835c28409f62b68af96ec5f, type: 3}
+  m_SortingOrder: 100
+  m_Sprite: {fileID: 21300000, guid: 98e9df2b6b16f7c44966ccc1a6a65973, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +87,79 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3091704986624679322
+--- !u!61 &5535234593570834359
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463127764510056596}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!50 &5171910969392544877
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463127764510056596}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &-1728435617469239251
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,19 +168,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3463127764510056596}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b461fab69f25b2d408271bd860ca1a67, type: 3}
+  m_Script: {fileID: 11500000, guid: fd11f9cb13d0ca9408554d6b34b8a720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite:
-  - {fileID: 21300000, guid: 91a61d6cd254dbf4f9be1308e2692e4c, type: 3}
-  - {fileID: 21300000, guid: 8228edc06835c28409f62b68af96ec5f, type: 3}
-  - {fileID: 21300000, guid: a36ee8f444684394398ea7a037b8e32b, type: 3}
-  - {fileID: 21300000, guid: 9c5d469594328c04d8944df9538ffce0, type: 3}
-  - {fileID: 21300000, guid: 4bf50eac63eca2e40b096f8c13ec1e4c, type: 3}
-  - {fileID: 21300000, guid: 98e9df2b6b16f7c44966ccc1a6a65973, type: 3}
-  - {fileID: 21300000, guid: d6583867f921ce14f90ccdaeba29b61e, type: 3}
-  - {fileID: 21300000, guid: 995e72f45e7d6404e8f04819107dae7d, type: 3}
-  - {fileID: 21300000, guid: 6e9268e01f0039040b6af6c7979b871d, type: 3}
-  - {fileID: 21300000, guid: 9514be56c1e315841a6a48f799a9793a, type: 3}
-  - {fileID: 21300000, guid: 210c74f89408b97499101e6641cd6ea7, type: 3}
-  prefab: {fileID: 3463127764510056596, guid: e739e54f3f343bb4bb49d320f1c2f82b, type: 3}
+  gc: {fileID: 0}

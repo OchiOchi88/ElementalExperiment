@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5567846352069329277}
   - component: {fileID: 5695266541460007191}
   - component: {fileID: -3865001281822056828}
+  - component: {fileID: -7811344025497076380}
   m_Layer: 0
   m_Name: CloneTile
   m_TagString: Untagged
@@ -143,3 +144,17 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &-7811344025497076380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3463127764510056596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b461fab69f25b2d408271bd860ca1a67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileSprite: []
+  prefab: {fileID: 0}

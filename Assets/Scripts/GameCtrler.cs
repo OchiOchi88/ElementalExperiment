@@ -62,14 +62,15 @@ public class GameCtrler : MonoBehaviour
                 }
                 else if (stageinfo[stage, ind] == 99)
                 {
-                    tileManager.SetTile(x, y, 1);
+                    tileManager.SetTile(x, y, stageinfo[stage,ind]);
                     ind++;
+                    eTileCount++;
                 }
                 else
                 {
                     tileManager.SetTile(x, y, stageinfo[stage, ind] + 1);
                     ind++;
-                    eTileCount++;
+
                 }
             }
         }

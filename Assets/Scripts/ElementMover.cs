@@ -124,5 +124,10 @@ public class ElementMover : MonoBehaviour
         Debug.Log("éwóﬂÇ™ìÕÇ¢ÇΩ");
         ismove = true;
     }
+    public void Defeat()
+    {
+        Destroy(transform.gameObject);
+        Debug.Log("MISSÅI");
+    }
 }
 

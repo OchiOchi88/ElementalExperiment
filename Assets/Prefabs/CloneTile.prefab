@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 8228edc06835c28409f62b68af96ec5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 91a61d6cd254dbf4f9be1308e2692e4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9b531a2d1628c46b2d029d1e2694dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ts: {fileID: -1728435617469239251, guid: 7b135cb52b29ffc4a80ab82c51454975, type: 3}
 --- !u!61 &-3865001281822056828
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -156,5 +157,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b461fab69f25b2d408271bd860ca1a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSprite: []
-  prefab: {fileID: 0}
+  tileSprite:
+  - {fileID: 21300000, guid: 91a61d6cd254dbf4f9be1308e2692e4c, type: 3}
+  - {fileID: 21300000, guid: 8228edc06835c28409f62b68af96ec5f, type: 3}
+  - {fileID: 21300000, guid: a36ee8f444684394398ea7a037b8e32b, type: 3}
+  - {fileID: 21300000, guid: 9c5d469594328c04d8944df9538ffce0, type: 3}
+  - {fileID: 21300000, guid: 4bf50eac63eca2e40b096f8c13ec1e4c, type: 3}
+  - {fileID: 21300000, guid: 98e9df2b6b16f7c44966ccc1a6a65973, type: 3}
+  - {fileID: 21300000, guid: d6583867f921ce14f90ccdaeba29b61e, type: 3}
+  - {fileID: 21300000, guid: 995e72f45e7d6404e8f04819107dae7d, type: 3}
+  - {fileID: 21300000, guid: 6e9268e01f0039040b6af6c7979b871d, type: 3}
+  - {fileID: 21300000, guid: 9514be56c1e315841a6a48f799a9793a, type: 3}
+  - {fileID: 21300000, guid: 210c74f89408b97499101e6641cd6ea7, type: 3}
+  prefab: {fileID: 3463127764510056596}

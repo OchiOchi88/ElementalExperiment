@@ -5,6 +5,9 @@ using UnityEngine;
 public class TileCollider : MonoBehaviour
 {
     Sprite mySprite;
+    int number = 0;
+    bool standBy = false;
+    [SerializeField]TileSetter ts;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +52,34 @@ public class TileCollider : MonoBehaviour
                 Debug.Log("13到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(4);
+            }if(mySprite.name == "tileFF")
+            {
+                Debug.Log("ステージ失敗...！");
+                ElementMover em = collision.GetComponent<ElementMover>();
+                em.Defeat();
             }
         }
+    }
+    public void SetVoid(int i)
+    {
+        number = i;
+    }
+    public void StandBy()
+    {
+        if(number != 0)
+        {
+            standBy = true;
+        }
+    }
+    public void OnMouseDown()
+    {
+        if(standBy == true)
+        {
+            ts.GetSR();
+        }
+    }
+    public void GetsRenderer(SpriteRenderer sr)
+    {
+        mySprite = sr.sprite;
     }
 }

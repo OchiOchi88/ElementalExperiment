@@ -8,6 +8,8 @@ public class TileSetter : MonoBehaviour
     private Vector3 offset;
     bool ismove = false;
     [SerializeField] GameCtrler gc;
+    SpriteRenderer sRenderer;
+    [SerializeField] TileCollider tc;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,23 +17,18 @@ public class TileSetter : MonoBehaviour
     }
     public void SetSprite(Sprite sr)
     {
-        SpriteRenderer sRenderer = GetComponent<SpriteRenderer>();
+        sRenderer = GetComponent<SpriteRenderer>();
         sRenderer.sprite = sr;
     }
     // Update is called once per frame
     void Update()
     {
-        if(ismove == true)
-        {
-            Vector3 currentScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
-            Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenPoint);
-            transform.position = currentPosition;
-        }
     }
     public void Down()
     {
-        this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        this.offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+//        this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+//        this.offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
+        tc.StandBy();
         ismove = true;
     }
     public void Drag()
@@ -40,16 +37,12 @@ public class TileSetter : MonoBehaviour
     }
     public void Up()
     {
-        float dis;
-        ismove = false;
-        dis = gc.GetDis(transform.position);
-        if(dis < 1.1f)
+    }
+    public void GetSR()
+    {
+        if(ismove == true)
         {
-            
-        }
-        else
-        {
-            Destroy(transform.gameObject);
+            tc.GetsRenderer(sRenderer);
         }
     }
 }

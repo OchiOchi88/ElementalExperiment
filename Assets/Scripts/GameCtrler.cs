@@ -62,13 +62,13 @@ public class GameCtrler : MonoBehaviour
                 }
                 else if (stageinfo[stage, ind] == 99)
                 {
-                    tileManager.SetTile(x, y, stageinfo[stage,ind]);
-                    ind++;
                     eTileCount++;
+                    tileManager.SetTile(x, y, stageinfo[stage,ind],eTileCount);
+                    ind++;
                 }
                 else
                 {
-                    tileManager.SetTile(x, y, stageinfo[stage, ind] + 1);
+                    tileManager.SetTile(x, y, stageinfo[stage, ind] + 1,eTileCount);
                     ind++;
 
                 }
@@ -99,27 +99,5 @@ public class GameCtrler : MonoBehaviour
     public int GetStage()
     {
         return stage;
-    }
-    public float GetDis( Vector3 tp)
-    {
-        float[] dis = { };
-        float fDis = 999.9f;
-        for (int i = 0; i < eTileCount; i++)
-        {
-            Vector3 targetPos = cloneTileManager.GetPos(i);
-            dis[i] = Vector3.Distance(tp, targetPos);
-        }
-        fDis = dis[0];
-        for(int i = 0; i < dis.Length - 1; i++)
-        {
-            for(int j = i + 1; j < dis.Length; j++)
-            {
-                if (dis[i] >= dis[j])
-                {
-                    fDis = dis[j];
-                }
-            }
-        }
-        return fDis;
     }
 }

@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9b531a2d1628c46b2d029d1e2694dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ts: {fileID: -1728435617469239251, guid: 7b135cb52b29ffc4a80ab82c51454975, type: 3}
+  ts: {fileID: 7769718340817162968, guid: a3617ae2581b97944b8b53fbf6f48b3d, type: 3}
+  tpm: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
 --- !u!61 &-3865001281822056828
 BoxCollider2D:
   m_ObjectHideFlags: 0

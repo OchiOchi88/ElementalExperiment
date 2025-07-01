@@ -10,26 +10,29 @@ public class TileManager : MonoBehaviour
 {
     [SerializeField] Sprite[] tileSprite;
     [SerializeField] GameObject prefab;
-    GameObject[] eChildren = {};
-    int i = 0;
+    List<TileCollider> tc = new List<TileCollider>();
     void Start()
     {
-
     }
 
     void Update()
     {
     }
 
-    public void SetTile(int x,int y,int info)
+    public void SetTile(int x, int y, int info, int eTileNumber)
     {
         Vector2 spawnPos = new Vector2(x, y);
 
         GameObject clone = Instantiate(prefab, spawnPos, Quaternion.identity);
         if (info == 99)
         {
-            clone.GetComponent<TileCollider>().SetVoid(i);
-            i++;
+            //Debug.Log(eTileNumber + "番送信");
+            clone.GetComponent<TileCollider>().SetVoid(eTileNumber);
+            while (tc.Count <= eTileNumber)
+            {
+                tc.Add(null);
+            }
+            tc[eTileNumber] = clone.GetComponent<TileCollider>();
         }
         SpriteRenderer sr = clone.GetComponent<SpriteRenderer>();
         if (sr != null)
@@ -44,8 +47,32 @@ public class TileManager : MonoBehaviour
             }
         }
     }
-    public Vector3 GetPos(int i)
+    public void StandBy()
     {
-        return eChildren[i].transform.position;
+        Debug.Log("マネージャースタンバイ");
+        foreach (TileCollider atc in tc)
+        {
+            if (atc)
+            {
+                Debug.Log(atc);
+                atc.StandBy();
+            }
+        }
+    }
+    public void GetsRenderer( Sprite sr)
+    {
+        Debug.Log("sr(BeforeHolder):" + sr);
+        Sprite srHolder = sr;
+        foreach (TileCollider atc in tc)
+        {
+            if (atc)
+            { 
+                bool isTouched = atc.GetStand();
+                if (isTouched == true)
+                {
+                    atc.GetsRenderer(srHolder);
+                }
+            }
+        }
     }
 }

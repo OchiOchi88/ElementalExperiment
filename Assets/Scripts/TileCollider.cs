@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TileCollider : MonoBehaviour
@@ -7,7 +8,9 @@ public class TileCollider : MonoBehaviour
     Sprite mySprite;
     int number = 0;
     bool standBy = false;
-    [SerializeField]TileSetter ts;
+    bool isTouched = false;
+    [SerializeField] TileSetter ts;
+    [SerializeField] TilePieceManager tpm;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,31 +31,31 @@ public class TileCollider : MonoBehaviour
         //Debug.Log("スクリプト到達！");
         if (dis <= 0.1f)
         {
-
-            if (mySprite.name == "tile10")
+            Sprite myTile = transform.GetComponent<SpriteRenderer>().sprite;
+            if (myTile.name == "tile10")
             {
                 Debug.Log("10到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(1);
             }
-            if (mySprite.name == "tile11")
+            if (myTile.name == "tile11")
             {
                 Debug.Log("11到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(2);
             }
-            if (mySprite.name == "tile12")
+            if (myTile.name == "tile12")
             {
                 Debug.Log("12到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(3);
             }
-            if (mySprite.name == "tile13")
+            if (myTile.name == "tile13")
             {
                 Debug.Log("13到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(4);
-            }if(mySprite.name == "tileFF")
+            }if(myTile.name == "tileFF")
             {
                 Debug.Log("ステージ失敗...！");
                 ElementMover em = collision.GetComponent<ElementMover>();
@@ -62,24 +65,46 @@ public class TileCollider : MonoBehaviour
     }
     public void SetVoid(int i)
     {
+        //Debug.Log(i + "番受信");
         number = i;
     }
     public void StandBy()
     {
-        if(number != 0)
+        //Debug.Log(number);
+
+        if (number != 0)
         {
-            standBy = true;
+            //Debug.Log(number + ":スタンバイ関数に入った");
+            if (standBy == true)
+            {
+                tpm.CancelChoose();
+            }
+            else
+            {
+                standBy = true;
+            }
         }
     }
     public void OnMouseDown()
     {
-        if(standBy == true)
+        Debug.Log(number+"番に設置しようとした(状態："+standBy+")");
+        if(standBy == true && number != 0)
         {
-            ts.GetSR();
+            isTouched = true;
+            tpm.GetSR();
         }
     }
-    public void GetsRenderer(SpriteRenderer sr)
+    public void GetsRenderer(Sprite sr)
     {
-        mySprite = sr.sprite;
+        if (isTouched == true)
+        {
+            Debug.Log("Result:"+sr);
+            transform.GetComponent<SpriteRenderer>().sprite = sr;
+            isTouched = false;
+        }
+    }
+    public bool GetStand()
+    {
+        return isTouched;
     }
 }

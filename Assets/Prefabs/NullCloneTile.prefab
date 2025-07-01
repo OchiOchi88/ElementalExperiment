@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5171910969392544877}
   - component: {fileID: -1728435617469239251}
   m_Layer: 0
-  m_Name: CloneTilePiece
+  m_Name: NullCloneTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
-  m_Sprite: {fileID: 21300000, guid: 8228edc06835c28409f62b68af96ec5f, type: 3}
+  m_SortingOrder: 9
+  m_Sprite: {fileID: 21300000, guid: 91a61d6cd254dbf4f9be1308e2692e4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -173,3 +173,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gc: {fileID: 0}
   tc: {fileID: 5695266541460007191, guid: e739e54f3f343bb4bb49d320f1c2f82b, type: 3}
+  sprites:
+  - {fileID: 21300000, guid: 91a61d6cd254dbf4f9be1308e2692e4c, type: 3}

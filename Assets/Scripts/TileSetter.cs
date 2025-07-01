@@ -6,13 +6,13 @@ public class TileSetter : MonoBehaviour
 {
     private Vector3 screenPoint;
     private Vector3 offset;
-    bool ismove = false;
     bool isTouched = false;
     [SerializeField] GameCtrler gc;
     SpriteRenderer sRenderer;
     [SerializeField] TileCollider tc;
     [SerializeField] Sprite[] sprites;
     [SerializeField] TileManager tm;
+    [SerializeField] TilePieceMover ts;
     Sprite mySprite;
     // Start is called before the first frame update
     void Start()
@@ -39,8 +39,10 @@ public class TileSetter : MonoBehaviour
         if(isTouched == true)
         {
             //ismove = true;
-            Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + " : " + transform.gameObject.name + "がスタンバイ完了！");
+            //Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + " : " + transform.gameObject.name + "がスタンバイ完了！");
+            //ts.SetTile(transform.GetComponent<SpriteRenderer>().sprite);
         }
+        ts.SetTile(transform.GetComponent<SpriteRenderer>().sprite);
     }
     public void GetSR()
     {

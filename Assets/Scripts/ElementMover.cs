@@ -22,7 +22,6 @@ public class ElementMover : MonoBehaviour
         Debug.Log("StartMove: " + dir);
         //        Debug.Log("‚¿‚á‚ñ‚Æ“®‚¢‚Ä‚¢‚é");
         moveDir = dir;
-        eManager.hasDestroy();
     }
     void Update()
     {

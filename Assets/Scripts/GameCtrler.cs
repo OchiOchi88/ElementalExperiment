@@ -11,9 +11,9 @@ public class GameCtrler : MonoBehaviour
     [SerializeField] ElementManager elementManager;
     [SerializeField] GoalElementManager goalElementManager;
     [SerializeField] TilePieceManager tpm;
+    [SerializeField] TilePieceMover selectshower;
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
-    int count = 0;
     int[] tileinfo = { 5, 5, 5, 6 };
     int[,] stageinfo = {
         { -1,
@@ -83,6 +83,7 @@ public class GameCtrler : MonoBehaviour
         {
             tpm.SetTilePiece(i);
         }
+        selectshower.SetTile();
     }
     public void GetElementsComp(ElementMover em)
     {

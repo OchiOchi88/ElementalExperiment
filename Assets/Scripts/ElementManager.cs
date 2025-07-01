@@ -17,7 +17,6 @@ public class ElementManager : MonoBehaviour
     SpriteRenderer sr;
     int moveDir;
     bool ismove;
-    bool isDestroy = false;
     GameObject currentInstance;
     void Start()
     {
@@ -67,10 +66,6 @@ public class ElementManager : MonoBehaviour
     {
         Debug.Log("ëóêMÅF" + moveDir);
         return moveDir;
-    }
-    public void hasDestroy()
-    {
-        isDestroy = true;
     }
     public SpriteRenderer GetColor()
     {

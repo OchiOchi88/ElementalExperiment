@@ -49,7 +49,7 @@ public class TileManager : MonoBehaviour
     }
     public void StandBy()
     {
-        Debug.Log("マネージャースタンバイ");
+        //Debug.Log("マネージャースタンバイ");
         foreach (TileCollider atc in tc)
         {
             if (atc)
@@ -61,7 +61,7 @@ public class TileManager : MonoBehaviour
     }
     public void GetsRenderer( Sprite sr)
     {
-        Debug.Log("sr(BeforeHolder):" + sr);
+        //Debug.Log("sr(BeforeHolder):" + sr);
         Sprite srHolder = sr;
         foreach (TileCollider atc in tc)
         {

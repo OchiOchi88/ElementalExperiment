@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5695266541460007191}
   - component: {fileID: -3865001281822056828}
   - component: {fileID: -7811344025497076380}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CloneTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}

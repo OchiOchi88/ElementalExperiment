@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8920857427321450895}
   - component: {fileID: 2233816239359775447}
   - component: {fileID: 4706755936863599162}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NullCloneTile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

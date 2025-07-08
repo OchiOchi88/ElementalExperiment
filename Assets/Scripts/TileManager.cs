@@ -11,6 +11,8 @@ public class TileManager : MonoBehaviour
     [SerializeField] Sprite[] tileSprite;
     [SerializeField] GameObject prefab;
     List<TileCollider> tc = new List<TileCollider>();
+    List<TileCollider> allTile = new List<TileCollider>();
+    int i = 0;
     void Start()
     {
     }
@@ -46,6 +48,12 @@ public class TileManager : MonoBehaviour
                 sr.sprite = tileSprite[info - 1];
             }
         }
+        while(allTile.Count <= i)
+        {
+            allTile.Add(null);
+        }
+        allTile[i] = clone.GetComponent<TileCollider>();
+        i++;
     }
     public void StandBy()
     {
@@ -74,5 +82,16 @@ public class TileManager : MonoBehaviour
                 }
             }
         }
+    }
+    public void AllDelete()
+    {
+        foreach(TileCollider aTile in allTile)
+        {
+            if (aTile != null)
+            {
+                aTile.Delete();
+            }
+        }
+        i = 0;
     }
 }

@@ -24,6 +24,8 @@ public class GoalChildManager : MonoBehaviour
             if (c == color)
             {
                 mover.Goaled(thisGoal);
+                GameCtrler gc = FindObjectOfType<GameCtrler>();
+                gc.Goal();
             }
         }
     }

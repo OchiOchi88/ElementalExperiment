@@ -107,4 +107,8 @@ public class TileCollider : MonoBehaviour
     {
         return isTouched;
     }
+    public void Delete()
+    {
+        Destroy(transform.gameObject);
+    }
 }

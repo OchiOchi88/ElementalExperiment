@@ -12,10 +12,13 @@ public class GameCtrler : MonoBehaviour
     [SerializeField] GoalElementManager goalElementManager;
     [SerializeField] TilePieceManager tpm;
     [SerializeField] TilePieceMover selectshower;
+    [SerializeField] ResultManager clearPanel;
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
+    int goalCount;
     int[] tileinfo = { 5, 5, 5, 6 };
-    int[,] stageinfo = {
+    int[][] stageinfo = new int [][]
+    {new int[]
         { -1,
             -1,
             -1,
@@ -36,16 +39,85 @@ public class GameCtrler : MonoBehaviour
             -1,
             -1,
             -1,
-            -1}};
-    int[] elementCount = { 2, 1, 1, 2 };
-    int[,] elementSpos = { { -3, -5, 1 },{-3,-3,1 } };
-    int[,] elementGpos = { { 2, 2 },{2,0 } };
+            -1},
+        new int[]
+        { -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            0,0,0,0,3,1,1,1,1,1,1,1,1,1,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,2,1,1,1,1,1,1,1,1,1,1,5,-1,
+            -1,
+            -1,
+            -1,
+            -1
+        },
+        new int[]
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            0,0,0,1,1,1,1,1,1,-1,
+            -1,
+            -1,
+            0,0,0,0,0,1,1,1,1,1,1,-1,
+            -1,
+            -1,
+            0,0,0,0,0,0,0,1,1,1,1,1,1,-1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+        },
+        new int[]
+        {
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            0,0,0,0,0,0,0,1,99,99,99,99,1,-1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1
+        }
+    };
+
+    int[] elementCount = { 2, 1, 3, 1 };
+    int[,] elementSpos = { { -3, -5, 1 },{-3,-3,1 }, {-5,4,3}, { -3, -7, 1 }, { 0, -5, 1 }, { 3, -3, 1 },{ 0,-3,1} };
+    int[,] elementGpos = { { 2, 2 },{2,0 },{-4 ,5}, { -3, -2 }, { 0, 0 }, { 3, 2 },{ 0, 2 } };
     int eTileCount = 0;
     void Start()
-    {
-        SetStart();
-    }
-    private void SetStart()
     {
         gc = GetComponent<GameCtrler>();
         int ind = 0;
@@ -53,26 +125,67 @@ public class GameCtrler : MonoBehaviour
         {
             for (int y = -10; y < 11; y++)
             {
-                if (stageinfo[stage, ind] == -1)
+                if (stageinfo[stage][ind] == -1)
                 {
                     y = 11;
                     ind++;
                     continue;
                 }
-                else if (stageinfo[stage, ind] == 0)
+                else if (stageinfo[stage][ind] == 0)
                 {
                     ind++;
                     continue;
                 }
-                else if (stageinfo[stage, ind] == 99)
+                else if (stageinfo[stage][ind] == 99)
                 {
                     eTileCount++;
-                    tileManager.SetTile(x, y, stageinfo[stage,ind],eTileCount);
+                    tileManager.SetTile(x, y, stageinfo[stage][ind], eTileCount);
                     ind++;
                 }
                 else
                 {
-                    tileManager.SetTile(x, y, stageinfo[stage, ind] + 1,eTileCount);
+                    tileManager.SetTile(x, y, stageinfo[stage][ind] + 1, eTileCount);
+                    ind++;
+
+                }
+            }
+        }
+        for (int i = 0; i < tileinfo[stage]; i++)
+        {
+            tpm.SetTilePiece(i);
+        }
+        selectshower.SetTile();
+        ElementSet();
+    }
+    public void SetStart()
+    {
+        tileManager.AllDelete();
+        gc = GetComponent<GameCtrler>();
+        int ind = 0;
+        for (int x = -10; x < 11; x++)
+        {
+            for (int y = -10; y < 11; y++)
+            {
+                if (stageinfo[stage][ind] == -1)
+                {
+                    y = 11;
+                    ind++;
+                    continue;
+                }
+                else if (stageinfo[stage][ind] == 0)
+                {
+                    ind++;
+                    continue;
+                }
+                else if (stageinfo[stage][ind] == 99)
+                {
+                    eTileCount++;
+                    tileManager.SetTile(x, y, stageinfo[stage][ind],eTileCount);
+                    ind++;
+                }
+                else
+                {
+                    tileManager.SetTile(x, y, stageinfo[stage][ind] + 1,eTileCount);
                     ind++;
 
                 }
@@ -87,10 +200,22 @@ public class GameCtrler : MonoBehaviour
     }
     private void ElementSet()
     {
+        elementManager.Restart();
+        goalElementManager.Restart();
+        goalCount = 0;
+        int ec = 0;
+        for(int j = 0; j < stage; j++) 
+        {
+            for (int i = 0; i < elementCount[j]; i++)
+            {
+                ec++;
+            }
+        }
         for (int i = 0; i < elementCount[stage]; i++)
         {
-            goalElementManager.SetElement(elementGpos[i, 0], elementGpos[i, 1], i);
-            elementManager.SetElement(elementSpos[i, 0], elementSpos[i, 1], i, elementSpos[i, 2], gc);
+            goalElementManager.SetElement(elementGpos[ec, 0], elementGpos[ec, 1], i);
+            elementManager.SetElement(elementSpos[ec, 0], elementSpos[ec, 1], i, elementSpos[ec, 2], gc);
+            ec++;
         }
     }
     public void GetElementsComp(ElementMover em)
@@ -114,5 +239,25 @@ public class GameCtrler : MonoBehaviour
         elementManager.Restart();
         goalElementManager.Restart();
         ElementSet();
+    }
+    public void Goal()
+    {
+        goalCount++;
+        if(goalCount >= elementCount[stage])
+        {
+            clearPanel.Clear();
+        }
+    }
+    public bool NextStage()
+    {
+        if (stage < elementCount.Length -1)
+        {
+            stage++;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

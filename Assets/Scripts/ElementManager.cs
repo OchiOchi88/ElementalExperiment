@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -18,6 +19,8 @@ public class ElementManager : MonoBehaviour
     int moveDir;
     bool ismove;
     GameObject currentInstance;
+    List<ElementMover> em = new List<ElementMover>();
+    int i = 0;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -58,6 +61,12 @@ public class ElementManager : MonoBehaviour
         {
             Debug.LogWarning($"ElementSprite[{color}] Ç™ñ¢ê›íËÇ≈Ç∑ÅI");
         }
+        while (em.Count <= i + 1)
+        {
+            em.Add(null);
+        }
+        em[i] = clone.GetComponent<ElementMover>();
+        i++;
     }
     void Update()
     {
@@ -70,5 +79,16 @@ public class ElementManager : MonoBehaviour
     public SpriteRenderer GetColor()
     {
         return sr;
+    }
+    public void Restart()
+    {
+        foreach(ElementMover elem in em)
+        {
+            if (elem != null)
+            {
+                elem.Defeat();
+            }
+        }
+        i = 0;
     }
 }

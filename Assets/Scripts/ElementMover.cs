@@ -126,7 +126,7 @@ public class ElementMover : MonoBehaviour
     public void Defeat()
     {
         Destroy(transform.gameObject);
-        Debug.Log("MISSÅI");
+        //Debug.Log("MISSÅI");
     }
 }
 

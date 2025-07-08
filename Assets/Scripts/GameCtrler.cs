@@ -43,6 +43,10 @@ public class GameCtrler : MonoBehaviour
     int eTileCount = 0;
     void Start()
     {
+        SetStart();
+    }
+    private void SetStart()
+    {
         gc = GetComponent<GameCtrler>();
         int ind = 0;
         for (int x = -10; x < 11; x++)
@@ -74,16 +78,20 @@ public class GameCtrler : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i < elementCount[stage]; i++)
-        {
-            goalElementManager.SetElement(elementGpos[i, 0], elementGpos[i, 1], i);
-            elementManager.SetElement(elementSpos[i, 0], elementSpos[i, 1], i, elementSpos[i, 2],gc);
-        }
         for(int i = 0; i < tileinfo[stage]; i++)
         {
             tpm.SetTilePiece(i);
         }
         selectshower.SetTile();
+        ElementSet();
+    }
+    private void ElementSet()
+    {
+        for (int i = 0; i < elementCount[stage]; i++)
+        {
+            goalElementManager.SetElement(elementGpos[i, 0], elementGpos[i, 1], i);
+            elementManager.SetElement(elementSpos[i, 0], elementSpos[i, 1], i, elementSpos[i, 2], gc);
+        }
     }
     public void GetElementsComp(ElementMover em)
     {
@@ -100,5 +108,11 @@ public class GameCtrler : MonoBehaviour
     public int GetStage()
     {
         return stage;
+    }
+    public void Restart()
+    {
+        elementManager.Restart();
+        goalElementManager.Restart();
+        ElementSet();
     }
 }

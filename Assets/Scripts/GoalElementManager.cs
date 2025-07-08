@@ -7,6 +7,8 @@ public class GoalElementManager : MonoBehaviour
     [SerializeField] Sprite[] ElementSprite;
     public GameObject prefab;
     SpriteRenderer sr;
+    List<GoalChildManager> gc = new List<GoalChildManager>();
+    int i = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,13 @@ public class GoalElementManager : MonoBehaviour
         {
             sr.sprite = ElementSprite[color];
         }
+        Debug.Log(goalColor);
+        while (gc.Count <= i + 1)
+        {
+            gc.Add(null);
+        }
+        gc[i] = clone.GetComponent<GoalChildManager>();
+        i++;
     }
     //public void Goal(SpriteRenderer isr)
     //{
@@ -47,4 +56,15 @@ public class GoalElementManager : MonoBehaviour
     //        mover.Goaled(thisGoal);
     //    }
     //}
+    public void Restart()
+    {
+        foreach(GoalChildManager goal in gc)
+        {
+            if (goal != null)
+            {
+                goal.Restart();
+            }
+        }
+        i = 0;
+    }
 }

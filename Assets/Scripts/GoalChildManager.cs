@@ -31,4 +31,8 @@ public class GoalChildManager : MonoBehaviour
     {
         color = c;
     }
+    public void Restart()
+    {
+        Destroy(transform.gameObject);
+    }
 }

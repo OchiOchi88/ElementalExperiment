@@ -1,0 +1,16 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class LastStageText : MonoBehaviour
+{
+    public void LastStageClear()
+    {
+        Text text = transform.GetComponentInChildren<Text>();
+        text.fontSize = 15;
+        text.text = "ラストステージを\nクリアしました！";
+        Button btn = transform.GetComponent<Button>();
+        btn.interactable = false;
+    }
+}

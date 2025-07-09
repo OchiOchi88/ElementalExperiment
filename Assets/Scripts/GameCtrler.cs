@@ -13,6 +13,7 @@ public class GameCtrler : MonoBehaviour
     [SerializeField] TilePieceManager tpm;
     [SerializeField] TilePieceMover selectshower;
     [SerializeField] ResultManager clearPanel;
+    [SerializeField] LastStageText lst;
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
     int goalCount;
@@ -195,7 +196,7 @@ public class GameCtrler : MonoBehaviour
         {
             tpm.SetTilePiece(i);
         }
-        selectshower.SetTile();
+        selectshower.ResetTile();
         ElementSet();
     }
     private void ElementSet()
@@ -246,6 +247,10 @@ public class GameCtrler : MonoBehaviour
         if(goalCount >= elementCount[stage])
         {
             clearPanel.Clear();
+            if(stage == stageinfo.Length - 1)
+            {
+                lst.LastStageClear();
+            }
         }
     }
     public bool NextStage()

@@ -21,4 +21,12 @@ public class TilePieceMover : MonoBehaviour
     {
         mySr.sprite = sr;
     }
+    public void ResetTile()
+    {
+        Destroy(mySr);
+        me = Instantiate(transform.gameObject, transform.position, Quaternion.identity);
+        mySr = me.GetComponent<SpriteRenderer>();
+        Debug.Log(sp[0].name);
+        mySr.sprite = sp[0];
+    }
 }

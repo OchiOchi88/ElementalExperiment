@@ -5,18 +5,27 @@ using UnityEngine.UI;
 
 public class TitleTextShower : MonoBehaviour
 {
-    string[] titleSpell = { "E", "l", "e", "m", "e", "n", "t", "a", "l"," ", "E", "x", "p", "e", "r", "i", "m", "e", "n", "t" };
+    string[] titleSpell = { "E", "l", "e", "m", "e", "n", "t", "a", "l","\n", "E", "x", "p", "e", "r", "i", "m", "e", "n", "t" };
     Text text;
+    [SerializeField] TitleController tc;
     void Start()
     {
         text = transform.GetComponent<Text>();
         text.text = "";
+        StartCoroutine("TitleWait");
     }
-    public void TitleShow()
+    IEnumerator TitleWait()
     {
-        foreach (string spell in titleSpell)
-        {
+        yield return new WaitForSeconds(0.5f);
+            StartCoroutine("TitleWrite");
+
+    }
+    IEnumerator TitleWrite()
+    {
+        foreach (string spell in titleSpell) {
             text.text += spell;
+            yield return new WaitForSeconds(0.05f);
         }
+        tc.ButtonShow();
     }
 }

@@ -6,7 +6,8 @@ using UnityEngine.UI;
 
 public class TitleController : MonoBehaviour
 {
-    [SerializeField] GameObject[] buttons; 
+    [SerializeField] GameObject[] buttons;
+    Color col = new Color(0, 0, 0);
     public void ButtonShow()
     {
         foreach(GameObject button in buttons)
@@ -16,7 +17,7 @@ public class TitleController : MonoBehaviour
     }
     public void MainStart()
     {
-        
+        Initiate.Fade("StageSelectScene", col,1.0f);
     }
     public void CreateStart()
     {

@@ -34,30 +34,30 @@ public class TileCollider : MonoBehaviour
             Sprite myTile = transform.GetComponent<SpriteRenderer>().sprite;
             if (myTile.name == "tile10")
             {
-                Debug.Log("10到達！");
+                //Debug.Log("10到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(1);
             }
             if (myTile.name == "tile11")
             {
-                Debug.Log("11到達！");
+                //Debug.Log("11到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(2);
             }
             if (myTile.name == "tile12")
             {
-                Debug.Log("12到達！");
+                //Debug.Log("12到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(3);
             }
             if (myTile.name == "tile13")
             {
-                Debug.Log("13到達！");
+                //Debug.Log("13到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(4);
             }if(myTile.name == "tileFF")
             {
-                Debug.Log("ステージ失敗...！");
+                //Debug.Log("ステージ失敗...！");
                 ElementMover em = collision.GetComponent<ElementMover>();
                 em.Defeat();
             }
@@ -98,7 +98,7 @@ public class TileCollider : MonoBehaviour
     {
         if (isTouched == true)
         {
-            Debug.Log("Result:"+sr);
+            //Debug.Log("Result:"+sr);
             transform.GetComponent<SpriteRenderer>().sprite = sr;
             isTouched = false;
         }

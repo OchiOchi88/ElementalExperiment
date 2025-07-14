@@ -73,7 +73,7 @@ public class ElementManager : MonoBehaviour
     }
     public int getDir()
     {
-        Debug.Log("送信：" + moveDir);
+        //Debug.Log("送信：" + moveDir);
         return moveDir;
     }
     public SpriteRenderer GetColor()

@@ -8,11 +8,11 @@ public class ResultManager : MonoBehaviour
     Color col = new Color(0, 0, 0);
     void Start()
     {
-        gameObject.SetActive(false);
+        enabled = false;
     }
     public void Clear()
     {
-        gameObject.SetActive(true);
+        enabled = true;
         GameCtrler gc = FindObjectOfType<GameCtrler>();
         bool isLast = gc.IsLast();
         if (isLast)
@@ -20,6 +20,7 @@ public class ResultManager : MonoBehaviour
             LastStageText lst = FindObjectOfType<LastStageText>();
             lst.LastStageClear();
         }
+        Debug.Log("ƒNƒŠƒA‰æ–Ê•\Ž¦Š®—¹”»’è");
     }
     public void Retry()
     {

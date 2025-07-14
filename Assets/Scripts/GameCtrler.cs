@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameCtrler : MonoBehaviour
 {
@@ -16,6 +18,7 @@ public class GameCtrler : MonoBehaviour
     [SerializeField] ResultManager clearPanel;
     [SerializeField] LastStageText lst;
     [SerializeField] GameObject pausePanel;
+    [SerializeField] GameObject pauseButton;
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
     int goalCount;
@@ -126,6 +129,7 @@ public class GameCtrler : MonoBehaviour
     int eTileCount = 0;
     void Start()
     {
+        goalCount = 0;
         if(ResultManager.stage != 0)
         {
             stage = ResultManager.stage;
@@ -136,7 +140,7 @@ public class GameCtrler : MonoBehaviour
             stage = StageSelector.startStage;
 
         }
-        Debug.Log(StageSelector.startStage);
+        //Debug.Log(StageSelector.startStage);
         gc = GetComponent<GameCtrler>();
         int ind = 0;
         for (int x = -10; x < 11; x++)
@@ -177,6 +181,7 @@ public class GameCtrler : MonoBehaviour
     }
     public void SetStart()
     {
+        goalCount = 0;
         tileManager.AllDelete();
         gc = GetComponent<GameCtrler>();
         int ind = 0;
@@ -242,7 +247,7 @@ public class GameCtrler : MonoBehaviour
     }
     public void StartMove()
     {
-        Debug.Log("ボタンが押された");
+        //Debug.Log("ボタンが押された");
         foreach (ElementMover move in eMover)
         {
             move.StratMove();
@@ -261,10 +266,13 @@ public class GameCtrler : MonoBehaviour
     public void Goal()
     {
         goalCount++;
-        if(goalCount >= elementCount[stage])
+        Debug.Log(goalCount);
+        if (goalCount >= elementCount[stage])
         {
+            Debug.Log("クリア判定");
+            pauseButton.SetActive(false);
+            clearPanel.gameObject.SetActive(true);
             clearPanel.Clear();
-
         }
     }
     public bool NextStage()

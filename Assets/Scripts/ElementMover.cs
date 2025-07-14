@@ -20,7 +20,7 @@ public class ElementMover : MonoBehaviour
 
     public void StartMove(int dir)
     {
-        Debug.Log("StartMove: " + dir);
+        //Debug.Log("StartMove: " + dir);
         //        Debug.Log("‚¿‚á‚ñ‚Æ“®‚¢‚Ä‚¢‚é");
         moveDir = dir;
     }
@@ -121,7 +121,7 @@ public class ElementMover : MonoBehaviour
     }
     public void StratMove()
     {
-        Debug.Log("Žw—ß‚ª“Í‚¢‚½");
+        //Debug.Log("Žw—ß‚ª“Í‚¢‚½");
         ismove = true;
     }
     public void Defeat()

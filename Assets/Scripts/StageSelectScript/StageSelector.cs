@@ -64,7 +64,7 @@ public class StageSelector : MonoBehaviour
             {
                 if (i > 5)
                 {
-                    pos = new Vector3((i * 150) - 725, 150, 0);
+                    pos = new Vector3((i * 150) - 725, 175, 0);
                 }
                 else
                 {
@@ -107,5 +107,9 @@ public class StageSelector : MonoBehaviour
     {
         startStage = setStage;
         Initiate.Fade("PuzzleScene", col, 1.0f);
+    }
+    public void BackToTitle()
+    {
+        Initiate.Fade("TitleScene", col, 1.0f);
     }
 }

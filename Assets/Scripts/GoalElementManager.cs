@@ -9,17 +9,6 @@ public class GoalElementManager : MonoBehaviour
     SpriteRenderer sr;
     List<GoalChildManager> gc = new List<GoalChildManager>();
     int i = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void SetElement(int x, int y, int color)
     {
         Vector2 spawnPos = new Vector2(x, y);

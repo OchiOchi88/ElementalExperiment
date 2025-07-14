@@ -1,38 +1,111 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageSelector : MonoBehaviour
 {
     [SerializeField] GameObject stageButton;
-    public float maxStage = 4;
+    [SerializeField] Button nextBtutton;
+    [SerializeField] Button backBtutton;
+    List<GameObject> children = new List<GameObject>();
+    public int maxStage;
+    int page;
+    int nowPage = 0;
+    bool isChanged;
+    static public int startStage;
+    Color col = new Color(0, 0, 0);
     void Start()
     {
-        Vector3 pos;
-        for (int j = 0; j < maxStage / 10; j++)
+        isChanged = false;
+        int fraction = maxStage % 10;
+        if (fraction == 0)
         {
-            float k;
-            if(j >= maxStage/10 -1)
+            page = maxStage / 10 - 1;
+        }
+        else
+        {
+            page = maxStage / 10;
+        }
+        SettingStage();
+        backBtutton.interactable = false;
+        if(maxStage <= 10)
+        {
+            nextBtutton.interactable = false;
+        }
+    }
+    private void SettingStage()
+    {
+        if (isChanged)
+        {
+            foreach (GameObject child in children)
             {
-                k = maxStage % 10;
+                child.GetComponent<StageSetter>().Delete();
             }
-            else
+            children = new List<GameObject>();
+            isChanged = false;
+        }
+        Vector3 pos;
+        int fraction;
+        if (nowPage >= page)
+        {
+            fraction = maxStage % 10;
+            if(fraction == 0)
             {
-                k = 10;
+                fraction = 10;
             }
-            for (int i = 1; i <= k; i++)
+        }
+        else
+        {
+            fraction = 10;
+        }
+            for (int i = 1; i <= fraction; i++)
             {
                 if (i > 5)
                 {
-                    pos = new Vector3((i * 150) - 1200, 0, 0);
+                    pos = new Vector3((i * 150) - 725, 150, 0);
                 }
                 else
                 {
-                    pos = new Vector3((i * 150) - 450, -100, 0);
+                    pos = new Vector3((i * 150) + 25, 300, 0);
                 }
-                GameObject clone = Instantiate(stageButton, pos, Quaternion.identity);
-                clone.GetComponent<StageSetter>().SetStage(i);
+                GameObject clone = Instantiate(stageButton, pos, Quaternion.identity, transform);
+                clone.GetComponent<StageSetter>().SetPos(pos);
+                clone.GetComponent<StageSetter>().SetStage(i + (nowPage * 10));
+            while (children.Count <= i -1)
+            {
+                children.Add(null);
             }
+            children[i-1] = clone;
         }
+    }
+
+    public void NextPage()
+    {
+        isChanged = true;
+        nowPage++;
+        SettingStage();
+        if (nowPage >= page)
+        {
+            nextBtutton.interactable = false;
+        }
+        backBtutton.interactable = true;
+    }
+    public void BackPage()
+    {
+        isChanged = true;
+        nowPage--;
+        SettingStage();
+        if (nowPage <= 0)
+        {
+            backBtutton.interactable = false;
+        }
+        nextBtutton.interactable = true;
+    }
+    public void StartStage(int setStage)
+    {
+        startStage = setStage;
+        Initiate.Fade("PuzzleScene", col, 1.0f);
     }
 }

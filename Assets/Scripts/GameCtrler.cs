@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameCtrler : MonoBehaviour
 {
-    [SerializeField] int stage;
+    static public int stage;
+    Color col = new Color(0, 0, 0);
     [SerializeField] TileManager tileManager;
     [SerializeField] TileManager cloneTileManager;
     [SerializeField] ElementManager elementManager;
@@ -14,12 +15,17 @@ public class GameCtrler : MonoBehaviour
     [SerializeField] TilePieceMover selectshower;
     [SerializeField] ResultManager clearPanel;
     [SerializeField] LastStageText lst;
+    [SerializeField] GameObject pausePanel;
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
     int goalCount;
-    int[] tileinfo = { 5, 5, 5, 6 };
+    int[] tileinfo = {0, 5, 5, 5, 6 };
     int[][] stageinfo = new int [][]
     {new int[]
+    {
+        -1
+    },
+        new int[]
         { -1,
             -1,
             -1,
@@ -114,12 +120,23 @@ public class GameCtrler : MonoBehaviour
         }
     };
 
-    int[] elementCount = { 2, 1, 3, 1 };
+    int[] elementCount = {0, 2, 1, 3, 1 };
     int[,] elementSpos = { { -3, -5, 1 },{-3,-3,1 }, {-5,4,3}, { -3, -7, 1 }, { 0, -5, 1 }, { 3, -3, 1 },{ 0,-3,1} };
     int[,] elementGpos = { { 2, 2 },{2,0 },{-4 ,5}, { -3, -2 }, { 0, 0 }, { 3, 2 },{ 0, 2 } };
     int eTileCount = 0;
     void Start()
     {
+        if(ResultManager.stage != 0)
+        {
+            stage = ResultManager.stage;
+
+        }
+        else
+        {
+            stage = StageSelector.startStage;
+
+        }
+        Debug.Log(StageSelector.startStage);
         gc = GetComponent<GameCtrler>();
         int ind = 0;
         for (int x = -10; x < 11; x++)
@@ -247,10 +264,7 @@ public class GameCtrler : MonoBehaviour
         if(goalCount >= elementCount[stage])
         {
             clearPanel.Clear();
-            if(stage == stageinfo.Length - 1)
-            {
-                lst.LastStageClear();
-            }
+
         }
     }
     public bool NextStage()
@@ -264,5 +278,38 @@ public class GameCtrler : MonoBehaviour
         {
             return false;
         }
+    }
+    public bool IsLast()
+    {
+        if (stage >= elementCount.Length - 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public void Pause()
+    {
+        pausePanel.SetActive(true);
+        elementManager.Pause();
+    }
+    public void Replay()
+    {
+        pausePanel.SetActive(false);
+        elementManager.Replay();
+    }
+    public void RestartStage()
+    {
+        Initiate.Fade("PuzzleScene", col, 2.0f);
+    }
+    public void BacktoSelect()
+    {
+        Initiate.Fade("StageSelectScene", col, 1.0f);
+    }
+    public void BacktoTitle()
+    {
+        Initiate.Fade("TitleScene", col, 1.0f);
     }
 }

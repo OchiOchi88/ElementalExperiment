@@ -91,4 +91,24 @@ public class ElementManager : MonoBehaviour
         }
         i = 0;
     }
+    public void Pause()
+    {
+        foreach(ElementMover elem in em)
+        {
+            if (elem != null)
+            {
+                elem.Pause();
+            }
+        }
+    }
+    public void Replay()
+    {
+        foreach (ElementMover elem in em)
+        {
+            if (elem != null)
+            {
+                elem.Replay();
+            }
+        }
+    }
 }

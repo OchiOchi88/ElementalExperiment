@@ -10,8 +10,9 @@ public class ElementMover : MonoBehaviour
     SpriteRenderer sr;
     private Vector3 targetPosition;
     bool ismove = false;
-    int moveDir;
+    int moveDir = 0;
     int color;
+    bool pausing = false;
     [SerializeField] GoalElementManager gElementManager;
     [SerializeField] ElementManager eManager;
     [SerializeField] Sprite[] ElementSprite;
@@ -25,7 +26,7 @@ public class ElementMover : MonoBehaviour
     }
     void Update()
     {
-        if (ismove == true)
+        if (ismove == true && pausing == false)
         {
             //Debug.Log("ˆÚ“®’†->•ûŒüF" + moveDir);
             targetPosition = transform.position;
@@ -127,6 +128,14 @@ public class ElementMover : MonoBehaviour
     {
         Destroy(transform.gameObject);
         //Debug.Log("MISSI");
+    }
+    public void Pause()
+    {
+        pausing = true;
+    }
+    public void Replay()
+    {
+        pausing = false;
     }
 }
 

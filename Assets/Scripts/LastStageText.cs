@@ -8,8 +8,8 @@ public class LastStageText : MonoBehaviour
     public void LastStageClear()
     {
         Text text = transform.GetComponentInChildren<Text>();
-        text.fontSize = 15;
-        text.text = "ラストステージを\nクリアしました！";
+        text.fontSize = 25;
+        text.text = "ラストステージ\nクリア！\nおめでとう！";
         Button btn = transform.GetComponent<Button>();
         btn.interactable = false;
     }

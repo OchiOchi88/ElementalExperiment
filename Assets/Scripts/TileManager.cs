@@ -13,14 +13,6 @@ public class TileManager : MonoBehaviour
     List<TileCollider> tc = new List<TileCollider>();
     List<TileCollider> allTile = new List<TileCollider>();
     int i = 0;
-    void Start()
-    {
-    }
-
-    void Update()
-    {
-    }
-
     public void SetTile(int x, int y, int info, int eTileNumber)
     {
         Vector2 spawnPos = new Vector2(x, y);

@@ -204,7 +204,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 232628223}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 698761315}
+        m_TargetAssemblyTypeName: TitleController, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 1
 --- !u!114 &232628223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +436,7 @@ MonoBehaviour:
   - {fileID: 1582465902}
   - {fileID: 1886775564}
   - {fileID: 919496951}
+  - {fileID: 232628220}
 --- !u!4 &698761316
 Transform:
   m_ObjectHideFlags: 0

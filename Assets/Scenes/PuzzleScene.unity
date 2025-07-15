@@ -1351,6 +1351,7 @@ GameObject:
   - component: {fileID: 577750319}
   - component: {fileID: 577750318}
   - component: {fileID: 577750321}
+  - component: {fileID: 577750322}
   m_Layer: 5
   m_Name: RightMove
   m_TagString: Untagged
@@ -1421,19 +1422,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 577750319}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1954940088}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: Right
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &577750319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,6 +1473,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7b34e2feaead4da68f6c5bc4e82fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &577750322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 577750316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Right
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Stop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
 --- !u!1 &601569599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1838,7 +1872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d345977a2988b94b9dbd0dba86a1c85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewportPosition: {x: 0.09, y: 0.835}
+  viewportPosition: {x: 0.09, y: 0.84}
   zOffset: 0
 --- !u!1 &844589300
 GameObject:
@@ -2581,6 +2615,7 @@ GameObject:
   - component: {fileID: 1204027573}
   - component: {fileID: 1204027572}
   - component: {fileID: 1204027575}
+  - component: {fileID: 1204027576}
   m_Layer: 5
   m_Name: LeftMove
   m_TagString: Untagged
@@ -2651,19 +2686,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1204027573}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1954940088}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: Left
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &1204027573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2714,6 +2737,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7b34e2feaead4da68f6c5bc4e82fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1204027576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204027570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Left
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Stop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
 --- !u!1 &1211716470
 GameObject:
   m_ObjectHideFlags: 0
@@ -3881,6 +3949,7 @@ GameObject:
   - component: {fileID: 1865488964}
   - component: {fileID: 1865488963}
   - component: {fileID: 1865488966}
+  - component: {fileID: 1865488967}
   m_Layer: 5
   m_Name: DownMove
   m_TagString: Untagged
@@ -3951,19 +4020,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1865488964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1954940088}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: Down
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &1865488964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4014,6 +4071,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7b34e2feaead4da68f6c5bc4e82fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1865488967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1865488961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Down
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Stop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
 --- !u!1 &1923000194
 GameObject:
   m_ObjectHideFlags: 0
@@ -4197,6 +4299,8 @@ MonoBehaviour:
   - {fileID: 1204027575}
   - {fileID: 2088171813}
   - {fileID: 1865488966}
+  zoomIn: {fileID: 525444145}
+  zoomOut: {fileID: 1430220260}
 --- !u!4 &1954940089
 Transform:
   m_ObjectHideFlags: 0
@@ -4437,6 +4541,7 @@ GameObject:
   - component: {fileID: 2088171811}
   - component: {fileID: 2088171810}
   - component: {fileID: 2088171813}
+  - component: {fileID: 2088171814}
   m_Layer: 5
   m_Name: UpMove
   m_TagString: Untagged
@@ -4507,19 +4612,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2088171811}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1954940088}
-        m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
-        m_MethodName: Up
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &2088171811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4570,6 +4663,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccb7b34e2feaead4da68f6c5bc4e82fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2088171814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088171808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Up
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+  - eventID: 3
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1954940088}
+          m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
+          m_MethodName: Stop
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

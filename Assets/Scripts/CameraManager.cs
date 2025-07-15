@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraManager : MonoBehaviour
 {
@@ -8,9 +9,20 @@ public class CameraManager : MonoBehaviour
     [SerializeField] TileTab tt;
     [SerializeField] SelectingTab st;
     [SerializeField] HiddenButton[] hb;
+    [SerializeField] Button zoomIn;
+    [SerializeField] Button zoomOut;
     int xMove = 0;
     int yMove = 0;
     bool isZoom = false;
+    int moveDir = 0;
+    private void Start()
+    {
+        zoomOut.interactable = false;
+    }
+    private void Update()
+    {
+        CameraMove();
+    }
     public void ZoomIn()
     {
         if (isZoom == false)
@@ -19,6 +31,8 @@ public class CameraManager : MonoBehaviour
             tt.ZoomIn();
             st.ZoomIn();
             isZoom = true;
+            zoomIn.interactable = false;
+            zoomOut.interactable = true;
             foreach (HiddenButton ahb in hb)
             {
                 ahb.SetTrue();
@@ -36,46 +50,72 @@ public class CameraManager : MonoBehaviour
             yMove = 0;
             cam.transform.position = new Vector3(0, 0, -10);
             isZoom = false;
-            foreach(HiddenButton ahb in hb)
+            zoomIn.interactable = true;
+            zoomOut.interactable = false;
+            foreach (HiddenButton ahb in hb)
             {
                 ahb.SetFalse();
             }
         }
     }
+    private void CameraMove()
+    {
+        switch (moveDir)
+        {
+            case 0:
+                break;
+            case 1:
+                if (xMove <= 300)
+                {
+                    float move = cam.transform.position.x + 0.025f;
+                    cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
+                    xMove++;
+                }
+                break;
+            case 2:
+                if (xMove >= -300)
+                {
+                    float move = cam.transform.position.x - 0.025f;
+                    cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
+                    xMove--;
+                }
+                break;
+            case 3:
+                if (yMove <= 300)
+                {
+                    float move = cam.transform.position.y + 0.025f;
+                    cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
+                    yMove++;
+                }
+                break;
+            case 4:
+                if (yMove >= -300)
+                {
+                    float move = cam.transform.position.y - 0.025f;
+                    cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
+                    yMove--;
+                }
+                break;
+        }
+    }
     public void Right()
     {
-        if(xMove <= 1)
-        {
-            float move = cam.transform.position.x + 3.5f;
-            cam.transform.position = new Vector3(move,cam.transform.position.y, cam.transform.position.z);
-            xMove++;
-        }
+        moveDir = 1;
     }
     public void Left()
     {
-        if (xMove >= -1)
-        {
-            float move = cam.transform.position.x - 3.5f;
-            cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
-            xMove--;
-        }
+        moveDir = 2;
     }
     public void Up()
     {
-        if (yMove <= 1)
-        {
-            float move = cam.transform.position.y + 3.5f;
-            cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
-            yMove++;
-        }
+        moveDir = 3;
     }
     public void Down()
     {
-        if (yMove >= -1)
-        {
-            float move = cam.transform.position.y - 3.5f;
-            cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
-            yMove--;
-        }
+        moveDir = 4;
+    }
+    public void Stop()
+    {
+        moveDir = 0;
     }
 }

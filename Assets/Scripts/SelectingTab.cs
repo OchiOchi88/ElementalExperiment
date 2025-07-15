@@ -16,14 +16,14 @@ public class SelectingTab : MonoBehaviour
     public void ZoomIn()
     {
         zoom++;
-        GetComponent<Transform>().localScale = new Vector3(0, 0, 0);
+        GetComponent<Transform>().localScale = new Vector3(1.65f, 1.65f, 0);
     }
     public void ZoomOut()
     {
         zoom--;
         if (zoom == 0)
         {
-            GetComponent<Transform>().localScale = new Vector3(5.5f, 5.5f, 1);
+            GetComponent<Transform>().localScale = new Vector3(5.5f, 5.5f, 0);
         }
     }
 }

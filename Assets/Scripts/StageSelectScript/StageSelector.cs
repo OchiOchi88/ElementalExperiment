@@ -16,8 +16,11 @@ public class StageSelector : MonoBehaviour
     bool isChanged;
     static public int startStage;
     Color col = new Color(0, 0, 0);
+    RectTransform rtf;
     void Start()
     {
+        rtf = GetComponent<RectTransform>();
+        rtf.anchoredPosition = new Vector3(0, 0, 0);
         isChanged = false;
         int fraction = maxStage % 10;
         if (fraction == 0)
@@ -64,15 +67,17 @@ public class StageSelector : MonoBehaviour
             {
                 if (i > 5)
                 {
-                    pos = new Vector3((i * 150) - 725, 175, 0);
+                    pos = new Vector3((i * 120) - 960, -65, 0);
                 }
                 else
                 {
-                    pos = new Vector3((i * 150) + 25, 300, 0);
+                    pos = new Vector3((i * 120) - 360, 50, 0);
                 }
                 GameObject clone = Instantiate(stageButton, pos, Quaternion.identity, transform);
+                rtf = clone.GetComponent<RectTransform>();    
                 clone.GetComponent<StageSetter>().SetPos(pos);
                 clone.GetComponent<StageSetter>().SetStage(i + (nowPage * 10));
+            rtf.anchoredPosition = pos;
             while (children.Count <= i -1)
             {
                 children.Add(null);

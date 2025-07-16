@@ -21,7 +21,7 @@ public class CameraManager : MonoBehaviour
         zoomOut.interactable = false;
         //tpm = FindObjectOfType<TilePieceMover>();
     }
-    private void Update()
+    private void FixedUpdate()
     {
         CameraMove();
     }
@@ -69,33 +69,33 @@ public class CameraManager : MonoBehaviour
             case 0:
                 break;
             case 1:
-                if (xMove <= 300)
+                if (xMove <= 100)
                 {
-                    float move = cam.transform.position.x + 0.025f;
+                    float move = cam.transform.position.x + 0.075f;
                     cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
                     xMove++;
                 }
                 break;
             case 2:
-                if (xMove >= -300)
+                if (xMove >= -100)
                 {
-                    float move = cam.transform.position.x - 0.025f;
+                    float move = cam.transform.position.x - 0.075f;
                     cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
                     xMove--;
                 }
                 break;
             case 3:
-                if (yMove <= 300)
+                if (yMove <= 100)
                 {
-                    float move = cam.transform.position.y + 0.025f;
+                    float move = cam.transform.position.y + 0.075f;
                     cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
                     yMove++;
                 }
                 break;
             case 4:
-                if (yMove >= -300)
+                if (yMove >= -100)
                 {
-                    float move = cam.transform.position.y - 0.025f;
+                    float move = cam.transform.position.y - 0.075f;
                     cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
                     yMove--;
                 }

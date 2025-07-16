@@ -86,4 +86,8 @@ public class TileManager : MonoBehaviour
         }
         i = 0;
     }
+    public Sprite UpdateTile(int i)
+    {
+        return tileSprite[i];
+    }
 }

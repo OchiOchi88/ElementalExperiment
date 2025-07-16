@@ -13,6 +13,7 @@ public class ElementMover : MonoBehaviour
     int moveDir = 0;
     int color;
     bool pausing = false;
+    bool isGimicTrigger = false;
     [SerializeField] GoalElementManager gElementManager;
     [SerializeField] ElementManager eManager;
     [SerializeField] Sprite[] ElementSprite;
@@ -24,7 +25,11 @@ public class ElementMover : MonoBehaviour
         //        Debug.Log("‚¿‚á‚ñ‚Æ“®‚¢‚Ä‚¢‚é");
         moveDir = dir;
     }
-    void Update()
+    public int GetDirection()
+    {
+        return moveDir;
+    }
+    void FixedUpdate()
     {
         if (ismove == true && pausing == false)
         {
@@ -35,7 +40,7 @@ public class ElementMover : MonoBehaviour
                 case 0:
                     return;
                 case 1:
-                    targetPosition.y = transform.position.y + 0.005f;
+                    targetPosition.y = transform.position.y + 0.05f;
                     transform.position = targetPosition;
 //                    sr.transform.position = transform.position;
                     
@@ -46,7 +51,7 @@ public class ElementMover : MonoBehaviour
                     }
                     return;
                 case 2:
-                    targetPosition.x = transform.position.x + 0.005f;
+                    targetPosition.x = transform.position.x + 0.05f;
                     transform.position = targetPosition;
 //                    sr.transform.position = transform.position;
                     
@@ -57,7 +62,7 @@ public class ElementMover : MonoBehaviour
                     }
                     return;
                 case 3:
-                    targetPosition.y = transform.position.y - 0.005f;
+                    targetPosition.y = transform.position.y - 0.05f;
                     transform.position = targetPosition;
 //                    sr.transform.position = transform.position;
 
@@ -68,7 +73,7 @@ public class ElementMover : MonoBehaviour
                     }
                     return;
                 case 4:
-                    targetPosition.x = transform.position.x - 0.005f;
+                    targetPosition.x = transform.position.x - 0.05f;
                     transform.position = targetPosition;
 //                    sr.transform.position = transform.position;
 
@@ -102,7 +107,11 @@ public class ElementMover : MonoBehaviour
     }
     public void ChangeDirection(int dir)
     {
-        moveDir = dir;
+        if(isGimicTrigger == false)
+        {
+            moveDir = dir;
+        }
+        isGimicTrigger = true;
     }
     public int IsGoal()
     {
@@ -136,6 +145,10 @@ public class ElementMover : MonoBehaviour
     public void Replay()
     {
         pausing = false;
+    }
+    public void SetGimicEnd()
+    {
+        isGimicTrigger = false;
     }
 }
 

@@ -135,13 +135,17 @@ public class GameCtrler : MonoBehaviour
             stage = ResultManager.stage;
 
         }
-        else
+        else if(StageSelector.startStage != 0)
         {
             stage = StageSelector.startStage;
 
         }
-        //Debug.Log(StageSelector.startStage);
-        gc = GetComponent<GameCtrler>();
+        else
+        {
+            stage = 1;
+        }
+            //Debug.Log(StageSelector.startStage);
+            gc = GetComponent<GameCtrler>();
         int ind = 0;
         for (int x = -10; x < 11; x++)
         {

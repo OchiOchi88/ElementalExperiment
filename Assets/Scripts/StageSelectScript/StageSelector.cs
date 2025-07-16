@@ -111,10 +111,10 @@ public class StageSelector : MonoBehaviour
     public void StartStage(int setStage)
     {
         startStage = setStage;
-        Initiate.Fade("PuzzleScene", col, 1.0f);
+        Initiate.Fade("PuzzleScene", col, 1.5f);
     }
     public void BackToTitle()
     {
-        Initiate.Fade("TitleScene", col, 1.0f);
+        Initiate.Fade("TitleScene", col, 1.5f);
     }
 }

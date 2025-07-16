@@ -11,6 +11,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] HiddenButton[] hb;
     [SerializeField] Button zoomIn;
     [SerializeField] Button zoomOut;
+    [SerializeField] TilePieceMover tpm;
     int xMove = 0;
     int yMove = 0;
     bool isZoom = false;
@@ -18,6 +19,7 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         zoomOut.interactable = false;
+        //tpm = FindObjectOfType<TilePieceMover>();
     }
     private void Update()
     {
@@ -30,6 +32,7 @@ public class CameraManager : MonoBehaviour
             cam.GetComponent<Camera>().orthographicSize -= 7;
             tt.ZoomIn();
             st.ZoomIn();
+            tpm.ZoomIn();
             isZoom = true;
             zoomIn.interactable = false;
             zoomOut.interactable = true;
@@ -46,6 +49,7 @@ public class CameraManager : MonoBehaviour
             cam.GetComponent<Camera>().orthographicSize += 7;
             tt.ZoomOut();
             st.ZoomOut();
+            tpm.ZoomOut();
             xMove = 0;
             yMove = 0;
             cam.transform.position = new Vector3(0, 0, -10);

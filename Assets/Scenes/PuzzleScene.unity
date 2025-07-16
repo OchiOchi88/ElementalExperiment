@@ -4301,6 +4301,7 @@ MonoBehaviour:
   - {fileID: 1865488966}
   zoomIn: {fileID: 525444145}
   zoomOut: {fileID: 1430220260}
+  tpm: {fileID: 4706755936863599162, guid: 8befd3d2f052f1f44b8ad220f18a6339, type: 3}
 --- !u!4 &1954940089
 Transform:
   m_ObjectHideFlags: 0

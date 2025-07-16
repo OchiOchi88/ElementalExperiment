@@ -17,7 +17,7 @@ public class TitleController : MonoBehaviour
     }
     public void MainStart()
     {
-        Initiate.Fade("StageSelectScene", col,1.0f);
+        Initiate.Fade("StageSelectScene", col,1.5f);
     }
     public void CreateStart()
     {

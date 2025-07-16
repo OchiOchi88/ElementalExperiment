@@ -314,10 +314,14 @@ public class GameCtrler : MonoBehaviour
     }
     public void BacktoSelect()
     {
-        Initiate.Fade("StageSelectScene", col, 1.0f);
+        StageSelector.startStage = 0;
+        ResultManager.stage = 0;
+        Initiate.Fade("StageSelectScene", col, 1.5f);
     }
     public void BacktoTitle()
     {
-        Initiate.Fade("TitleScene", col, 1.0f);
+        StageSelector.startStage = 0;
+        ResultManager.stage = 0;
+        Initiate.Fade("TitleScene", col, 1.5f);
     }
 }

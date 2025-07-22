@@ -88,6 +88,14 @@ public class TileManager : MonoBehaviour
     }
     public Sprite UpdateTile(int i)
     {
+        //Debug.Log("アップデートタイル" + tileSprite[i]);
         return tileSprite[i];
+    }
+    public void Restart()
+    {
+        foreach(TileCollider aTile in allTile)
+        {
+            aTile.Restart();
+        }
     }
 }

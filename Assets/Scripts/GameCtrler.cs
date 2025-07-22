@@ -266,6 +266,7 @@ public class GameCtrler : MonoBehaviour
         elementManager.Restart();
         goalElementManager.Restart();
         ElementSet();
+        tileManager.Restart();
     }
     public void Goal()
     {

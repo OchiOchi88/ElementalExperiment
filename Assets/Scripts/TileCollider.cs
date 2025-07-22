@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class TileCollider : MonoBehaviour
 {
-    float detectionRadius = 1.1f; // 検出半径
-    string targetTag = "UI"; // 検出対象のタグ
-    string functionName = "OutOfCharge"; // 実行する関数名
     Sprite mySprite;
     int number = 0;
     bool standBy = false;
@@ -21,6 +18,10 @@ public class TileCollider : MonoBehaviour
         mySprite = GetComponent<SpriteRenderer>().sprite;
         GetComponent<BoxCollider2D>();
     }
+    public void Restart()
+    {
+        GetComponent<SpriteRenderer>().sprite = mySprite;
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
 
@@ -32,7 +33,7 @@ public class TileCollider : MonoBehaviour
         {
             collision.GetComponent<ElementMover>().SetGimicEnd();
         }
-        if (dis <= 0.1f)
+        if (dis <= 0.025f)
         {
             Sprite myTile = transform.GetComponent<SpriteRenderer>().sprite;
             if (myTile.name == "tile10")
@@ -100,25 +101,30 @@ public class TileCollider : MonoBehaviour
             }
             if (myTile.name == "tile51")
             {
-                mySprite = FindObjectOfType<TileManager>().UpdateTile(15);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(15);
+                GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile52")
             {
-                mySprite = FindObjectOfType<TileManager>().UpdateTile(16);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(16);
+                GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile53")
             {
-                mySprite = FindObjectOfType<TileManager>().UpdateTile(17);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(17);
+                GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile54")
             {
-                mySprite = FindObjectOfType<TileManager>().UpdateTile(18);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(18);
+                GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile55")
             {
-                mySprite = FindObjectOfType<TileManager>().UpdateTile(19);
-                victimTile = GetObjectsWithinRadius();
-                ExecuteFunctionOnObjects(victimTile);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(19);
+                GetComponent<SpriteRenderer>().sprite = getTile;
+                victimTile = GetObjectsOutOfCharge();
+                ExecuteOutOfCharge(victimTile);
             }
             if (myTile.name == "tileFF")
             {
@@ -128,33 +134,43 @@ public class TileCollider : MonoBehaviour
             }
         }
     }
-    List<GameObject> GetObjectsWithinRadius()
+    List<GameObject> GetObjectsOutOfCharge()
     {
         List<GameObject> objects = new List<GameObject>();
-        Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius);
 
-        foreach (Collider collider in colliders)
+        // 検出範囲のサイズと中心位置
+        Vector2 size = new Vector2(1.5f, 1.5f);
+        Vector2 center = transform.position;
+
+        // 2DのOverlapBoxを使用
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(center, size, 0f);
+
+        Debug.Log("対象タイル個数：" + colliders.Length);
+
+        foreach (Collider2D collider in colliders)
         {
-            if (collider.CompareTag(targetTag))
+            if (collider.tag=="Tile")
             {
                 objects.Add(collider.gameObject);
             }
         }
+
         return objects;
     }
     // 指定した関数を実行
-    void ExecuteFunctionOnObjects(List<GameObject> objects)
+    void ExecuteOutOfCharge(List<GameObject> objects)
     {
         foreach (GameObject obj in objects)
         {
-            obj.SendMessage(functionName, SendMessageOptions.DontRequireReceiver);
+            obj.GetComponent<TileCollider>().OutOfCharge();
         }
     }
 
     // 実行する関数の例
     void OutOfCharge()
     {
-        mySprite = GetComponent<TileManager>().UpdateTile(1);
+        Sprite myTile= GetComponent<TileManager>().UpdateTile(1);
+        GetComponent<SpriteRenderer>().sprite = myTile;
     }
     public void SetVoid(int i)
     {
@@ -193,6 +209,7 @@ public class TileCollider : MonoBehaviour
         {
             //Debug.Log("Result:"+sr);
             transform.GetComponent<SpriteRenderer>().sprite = sr;
+            mySprite = GetComponent<SpriteRenderer>().sprite;
             isTouched = false;
         }
     }

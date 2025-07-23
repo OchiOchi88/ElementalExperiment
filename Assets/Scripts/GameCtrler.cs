@@ -22,7 +22,12 @@ public class GameCtrler : MonoBehaviour
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
     int goalCount;
-    int[] tileinfo = {0, 5, 5, 5, 14 };
+    int[][] tileinfo = new int [][] { new int[] { },
+        new int[]{ 1,1,1,1,1 },
+        new int[]{ 1,1,1,1,1 },
+        new int[]{ 1,1,1,1,1 },
+        new int[]{ 1,1,1,1,1,0,0,0,0,0,0,1,1,1 },
+        new int[]{ 1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1} };
     int[][] stageinfo = new int [][]
     {new int[]
     {
@@ -120,12 +125,48 @@ public class GameCtrler : MonoBehaviour
             -1,
             -1,
             -1
+        },
+        new int[]
+        {
+            -1,
+            -1,
+            0,0,0,0,0,1,1,1,1,1,3,1,1,1,1,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,1,1,1,1,1,3,1,1,1,1,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,13,1,1,1,99,-1,
+            0,0,0,0,0,0,1,0,0,0,99,-1,
+            0,0,0,0,0,0,1,0,0,0,9,-1,
+            0,0,0,0,0,0,1,0,0,0,1,-1,
+            0,0,0,0,0,0,13,1,1,1,3,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            0,0,0,0,0,0,0,0,0,0,1,-1,
+            -1,
+            -1
         }
     };
 
-    int[] elementCount = {0, 2, 1, 3, 4 };
-    int[,] elementSpos = { { -3, -5, 1 },{-3,-3,1 }, {-5,4,3}, { -3, -7, 1 }, { 0, -5, 1 }, { 3, -3, 1 }, { 0, -6, 1 }, { -5, 0, 2 }, { 0, 4, 3 }, { 3, 0, 4 } };
-    int[,] elementGpos = { { 2, 2 },{2,0 },{-4 ,5}, { -3, -2 }, { 0, 0 }, { 3, 2 },{ 7, -7 }, { 7, -6 }, { 7, -5 }, { 7, -4 } };
+    int[] elementCount = {0, 2, 1, 3, 4 ,4};
+    int[,] elementSpos = { 
+        { -3, -5, 1 },{-3,-3,1 }, 
+        {-5,4,3}, 
+        { -3, -7, 1 }, { 0, -5, 1 }, { 3, -3, 1 }, 
+        { 0, -6, 1 }, { -5, 0, 2 }, { 0, 4, 3 }, { 3, 0, 4 } ,
+        { -8, 5, 3 }, { -8, -3, 1 }, { -4, -5, 1 }, { -4, 3, 3 }
+    };
+    int[,] elementGpos = { 
+        { 2, 2 },{2,0 },
+        {-4 ,5}, 
+        { -3, -2 }, { 0, 0 }, { 3, 2 },
+        { 7, -7 }, { 7, -6 }, { 7, -5 }, { 7, -4 },
+        { 5, 0 }, { 6, 0 }, { 7, 0 }, { 8, 0 }    
+    };
     int eTileCount = 0;
     void Start()
     {
@@ -176,10 +217,21 @@ public class GameCtrler : MonoBehaviour
                 }
             }
         }
-        for (int i = 0; i < tileinfo[stage]; i++)
+        int tileKind = 0;
+        int tilePalced = 0;
+        foreach(int tile in tileinfo[stage])
         {
-            tpm.SetTilePiece(i);
+            if(tile == 1)
+            {
+                tpm.SetTilePiece(tileKind,tilePalced);
+                tilePalced++;
+            }
+            tileKind++;
         }
+        //for (int i = 0; i < tileinfo[stage]; i++)
+        //{
+        //    tpm.SetTilePiece(i);
+        //}
         selectshower.SetTile();
         ElementSet();
     }
@@ -218,10 +270,21 @@ public class GameCtrler : MonoBehaviour
                 }
             }
         }
-        for(int i = 0; i < tileinfo[stage]; i++)
+        int tileKind = 0;
+        int tilePalced = 0;
+        foreach (int tile in tileinfo[stage])
         {
-            tpm.SetTilePiece(i);
+            if (tile == 1)
+            {
+                tpm.SetTilePiece(tileKind, tilePalced);
+                tilePalced++;
+            }
+            tileKind++;
         }
+        //for (int i = 0; i < tileinfo[stage]; i++)
+        //{
+        //    tpm.SetTilePiece(i);
+        //}
         selectshower.ResetTile();
         ElementSet();
     }

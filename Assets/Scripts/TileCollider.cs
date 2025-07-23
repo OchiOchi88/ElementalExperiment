@@ -28,6 +28,10 @@ public class TileCollider : MonoBehaviour
         Vector3 elemPos = collision.transform.position;
         Vector3 tilePos = transform.position;
         float dis = Vector3.Distance(elemPos, tilePos);
+        if (collision.tag != "Element")
+        {
+            return;
+        }
         //Debug.Log("スクリプト到達！");
         if(dis >= 0.2f)
         {
@@ -59,7 +63,38 @@ public class TileCollider : MonoBehaviour
                 //Debug.Log("13到達！");
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 dir.ChangeDirection(4);
-            }if (myTile.name == "tile31")
+            }
+            if (myTile.name == "tile20")
+            {
+                ElementMover em = collision.GetComponent<ElementMover>();
+                em.Defeat();
+            }
+            if (myTile.name == "tile21")
+            {
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(6);
+                GetComponent<SpriteRenderer>().sprite = getTile;
+            }
+            if (myTile.name == "tile22")
+            {
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(7);
+                GetComponent<SpriteRenderer>().sprite = getTile;
+            }
+            if (myTile.name == "tile23")
+            {
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(8);
+                GetComponent<SpriteRenderer>().sprite = getTile;
+            }
+            if (myTile.name == "tile24")
+            {
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(9);
+                GetComponent<SpriteRenderer>().sprite = getTile;
+            }
+            if (myTile.name == "tile25")
+            {
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(10);
+                GetComponent<SpriteRenderer>().sprite = getTile;
+            }
+            if (myTile.name == "tile31")
             {
                 ElementMover dir = collision.GetComponent<ElementMover>();
                 int direction = dir.GetDirection();
@@ -101,27 +136,27 @@ public class TileCollider : MonoBehaviour
             }
             if (myTile.name == "tile51")
             {
-                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(15);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(16);
                 GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile52")
             {
-                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(16);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(17);
                 GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile53")
             {
-                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(17);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(18);
                 GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile54")
             {
-                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(18);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(19);
                 GetComponent<SpriteRenderer>().sprite = getTile;
             }
             if (myTile.name == "tile55")
             {
-                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(19);
+                Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(20);
                 GetComponent<SpriteRenderer>().sprite = getTile;
                 victimTile = GetObjectsOutOfCharge();
                 ExecuteOutOfCharge(victimTile);

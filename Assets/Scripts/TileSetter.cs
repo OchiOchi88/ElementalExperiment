@@ -31,16 +31,11 @@ public class TileSetter : MonoBehaviour
     }
     public void OnMouseDown()
     {
-        //        this.screenPoint = Camera.main.WorldToScreenPoint(transform.position);
-        //        this.offset = transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
-        //Debug.Log(tc.gameObject.name);
         tm.StandBy();
         isTouched = true;
         if(isTouched == true)
         {
-            //ismove = true;
             //Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + " : " + transform.gameObject.name + "がスタンバイ完了！");
-            //ts.SetTile(transform.GetComponent<SpriteRenderer>().sprite);
         }
         ts.SetTile(transform.GetComponent<SpriteRenderer>().sprite);
     }
@@ -49,7 +44,7 @@ public class TileSetter : MonoBehaviour
         //Debug.Log(transform.gameObject.name);
         if(isTouched == true)
         {
-            Debug.Log("mySprite:" + transform.GetComponent<SpriteRenderer>().sprite);
+            //Debug.Log("mySprite:" + transform.GetComponent<SpriteRenderer>().sprite);
             tm.GetsRenderer(transform.GetComponent<SpriteRenderer>().sprite);
             //Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + "を設置完了！");
         }
@@ -61,7 +56,6 @@ public class TileSetter : MonoBehaviour
         {
             Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + "はスタンバイをキャンセルしました！");
             isTouched = false;
-            //ismove = false;
         }
     }
     public void GetTex(int n)

@@ -85,6 +85,7 @@ public class TileManager : MonoBehaviour
             }
         }
         i = 0;
+        allTile = new List<TileCollider>();
     }
     public Sprite UpdateTile(int i)
     {
@@ -93,9 +94,12 @@ public class TileManager : MonoBehaviour
     }
     public void Restart()
     {
-        foreach(TileCollider aTile in allTile)
+        foreach (TileCollider aTile in allTile)
         {
-            aTile.Restart();
+            if (aTile)
+            {
+                aTile.Restart();
+            }
         }
     }
 }

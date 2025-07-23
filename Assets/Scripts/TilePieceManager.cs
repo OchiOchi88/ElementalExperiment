@@ -16,42 +16,47 @@ public class TilePieceManager : MonoBehaviour
     {
 
     }
-    public void SetTilePiece(int i)
+    public void SetTilePiece(int i ,int pos)
     {
         float x;
         float y;
-        if (i <= 8)
+        if (pos <= 8)
         {
             x = 14.0f;
-            y = i;
+            y = pos;
         }
         else
         {
             x = 16.5f;
-            y = i - 9;
+            y = pos - 9;
         }
         GameObject clone = Instantiate(tilePrefab, new Vector3(x, 8.0f - (y * 2.0f), 0), Quaternion.identity);
         TileSetter mover = clone.GetComponent<TileSetter>();
-        while (ts.Count <= i)
+        while (ts.Count <= pos)
         {
             ts.Add(null);
         }
-        ts[i] = clone.GetComponent<TileSetter>();
+        ts[pos] = clone.GetComponent<TileSetter>();
         mover.GetTex(i);
     }
     public void GetSR()
     {
-        foreach(TileSetter ants in ts)
+        foreach (TileSetter ants in ts)
         {
-            Debug.Log(ants.GetComponent<SpriteRenderer>().sprite);
-            ants.GetSR();
+            if (ants)
+            {
+                ants.GetSR();
+            }
         }
     }
     public void CancelChoose()
     {
         foreach (TileSetter ants in ts)
         {
-            ants.CancelChoose();
+            if (ants)
+            {
+                ants.CancelChoose();
+            }
         }
     }
 }

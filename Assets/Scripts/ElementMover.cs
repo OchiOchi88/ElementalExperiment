@@ -14,6 +14,7 @@ public class ElementMover : MonoBehaviour
     int color;
     bool pausing = false;
     bool isGimicTrigger = false;
+    int life = 0;
     [SerializeField] GoalElementManager gElementManager;
     [SerializeField] ElementManager eManager;
     [SerializeField] Sprite[] ElementSprite;
@@ -49,7 +50,7 @@ public class ElementMover : MonoBehaviour
                     {
                         Destroy(transform.gameObject);
                     }
-                    return;
+                    break;
                 case 2:
                     targetPosition.x = transform.position.x + 0.05f;
                     transform.position = targetPosition;
@@ -60,7 +61,7 @@ public class ElementMover : MonoBehaviour
                     {
                         Destroy(transform.gameObject);
                     }
-                    return;
+                    break;
                 case 3:
                     targetPosition.y = transform.position.y - 0.05f;
                     transform.position = targetPosition;
@@ -71,7 +72,7 @@ public class ElementMover : MonoBehaviour
                     {
                         Destroy(transform.gameObject);
                     }
-                    return;
+                    break;
                 case 4:
                     targetPosition.x = transform.position.x - 0.05f;
                     transform.position = targetPosition;
@@ -82,9 +83,14 @@ public class ElementMover : MonoBehaviour
                     {
                         Destroy(transform.gameObject);
                     }
-                    return;
+                    break;
+            }
+            if(life <= 0)
+            {
+                Defeat();
             }
         }
+
     }
     void Start()
     {
@@ -149,6 +155,20 @@ public class ElementMover : MonoBehaviour
     public void SetGimicEnd()
     {
         isGimicTrigger = false;
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Tile")
+        {
+            life++;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Tile")
+        {
+            life--;
+        }
     }
 }
 

@@ -46,10 +46,6 @@ public class CameraManager : MonoBehaviour
                 zoomIn.interactable = false;
             }
             zoomOut.interactable = true;
-            foreach (HiddenButton ahb in hb)
-            {
-                ahb.SetTrue();
-            }
         }
     }
     public void ZoomOut()
@@ -90,10 +86,6 @@ public class CameraManager : MonoBehaviour
             if (zoomValue == 0)
             {
                 zoomOut.interactable = false;
-                foreach (HiddenButton ahb in hb)
-                {
-                    ahb.SetFalse();
-                }
             }
         }
     }

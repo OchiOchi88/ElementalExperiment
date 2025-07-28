@@ -725,9 +725,9 @@ RectTransform:
   - {fileID: 1430220259}
   - {fileID: 960249564}
   - {fileID: 710260260}
+  - {fileID: 385498370}
   - {fileID: 997565240}
   - {fileID: 1230208588}
-  - {fileID: 385498370}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -752,7 +752,7 @@ GameObject:
   - component: {fileID: 427997619}
   m_Layer: 0
   m_Name: BG
-  m_TagString: Untagged
+  m_TagString: BG
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

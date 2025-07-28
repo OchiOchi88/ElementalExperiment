@@ -39,10 +39,10 @@ public class TilePieceMover : MonoBehaviour
     }
     public void ZoomIn()
     {
-        me.GetComponent<Transform>().localScale = new Vector3(0.81f, 0.81f, 0);
+        me.GetComponent<Transform>().localScale -= new Vector3(0.019f, 0.019f, 0);
     }
     public void ZoomOut()
     {
-        me.GetComponent<Transform>().localScale = new Vector3(2.7f, 2.7f, 0);
+        me.GetComponent<Transform>().localScale += new Vector3(0.019f, 0.019f, 0);
     }
 }

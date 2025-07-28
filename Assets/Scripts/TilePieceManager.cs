@@ -8,6 +8,7 @@ public class TilePieceManager : MonoBehaviour
     [SerializeField] GameObject tilePrefab;
     [SerializeField] GameCtrler gc;
     List<TileSetter> ts = new List<TileSetter>();
+    TileTab parent;
     void Start()
     {
 
@@ -30,7 +31,8 @@ public class TilePieceManager : MonoBehaviour
             x = 16.5f;
             y = pos - 9;
         }
-        GameObject clone = Instantiate(tilePrefab, new Vector3(x, 8.0f - (y * 2.0f), 0), Quaternion.identity);
+        parent = FindObjectOfType<TileTab>();
+        GameObject clone = Instantiate(tilePrefab, new Vector3(x, 8.0f - (y * 2.0f), 0), Quaternion.identity,parent.transform);
         TileSetter mover = clone.GetComponent<TileSetter>();
         while (ts.Count <= pos)
         {

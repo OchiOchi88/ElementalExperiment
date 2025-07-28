@@ -12,29 +12,39 @@ public class CameraManager : MonoBehaviour
     [SerializeField] Button zoomIn;
     [SerializeField] Button zoomOut;
     [SerializeField] TilePieceMover tpm;
-    int xMove = 0;
-    int yMove = 0;
-    bool isZoom = false;
+    float xMove = 0;
+    float yMove = 0;
+    float zoomValue = 0;
     int moveDir = 0;
+    int zooming = 0;
+    const float speed = 0.075f;
+    FixedJoystick joystick;
     private void Start()
     {
+        joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
         zoomOut.interactable = false;
         //tpm = FindObjectOfType<TilePieceMover>();
     }
     private void FixedUpdate()
     {
         CameraMove();
+        ZoomIn();
+        ZoomOut();
+
     }
     public void ZoomIn()
     {
-        if (isZoom == false)
+        if (zooming == 1 && zoomValue < 100)
         {
-            cam.GetComponent<Camera>().orthographicSize -= 7;
+            cam.GetComponent<Camera>().orthographicSize -= 0.07f;
             tt.ZoomIn();
             st.ZoomIn();
             tpm.ZoomIn();
-            isZoom = true;
-            zoomIn.interactable = false;
+            zoomValue += 1.0f;
+            if (zoomValue == 100)
+            {
+                zoomIn.interactable = false;
+            }
             zoomOut.interactable = true;
             foreach (HiddenButton ahb in hb)
             {
@@ -44,64 +54,81 @@ public class CameraManager : MonoBehaviour
     }
     public void ZoomOut()
     {
-        if (isZoom == true)
+        if (zooming == -1 && zoomValue > 0)
         {
-            cam.GetComponent<Camera>().orthographicSize += 7;
+            cam.GetComponent<Camera>().orthographicSize += 0.07f;
             tt.ZoomOut();
             st.ZoomOut();
             tpm.ZoomOut();
-            xMove = 0;
-            yMove = 0;
-            cam.transform.position = new Vector3(0, 0, -10);
-            isZoom = false;
-            zoomIn.interactable = true;
-            zoomOut.interactable = false;
-            foreach (HiddenButton ahb in hb)
+            zoomValue -= 1.0f;
+            if (xMove >= zoomValue)
             {
-                ahb.SetFalse();
+                xMove--;
+                float move = cam.transform.position.x - speed;
+                cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
+            }
+            if (yMove >= zoomValue)
+            {
+                yMove--;
+                float move = cam.transform.position.y - speed;
+                cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
+            }
+            if (xMove <= -zoomValue)
+            {
+                xMove++;
+                float move = cam.transform.position.x + speed;
+                cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
+            }
+            if (yMove <= -zoomValue)
+            {
+                yMove++;
+                float move = cam.transform.position.y + speed;
+                cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
+            }
+            //cam.transform.position = new Vector3(0, 0, -10);
+            zoomIn.interactable = true;
+            if (zoomValue == 0)
+            {
+                zoomOut.interactable = false;
+                foreach (HiddenButton ahb in hb)
+                {
+                    ahb.SetFalse();
+                }
             }
         }
     }
     private void CameraMove()
     {
-        switch (moveDir)
+        Vector2 move = new Vector2(
+    joystick.Horizontal * speed,
+    joystick.Vertical * speed
+    );
+        if (xMove >= zoomValue && joystick.Horizontal > 0)
         {
-            case 0:
-                break;
-            case 1:
-                if (xMove <= 100)
-                {
-                    float move = cam.transform.position.x + 0.075f;
-                    cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
-                    xMove++;
-                }
-                break;
-            case 2:
-                if (xMove >= -100)
-                {
-                    float move = cam.transform.position.x - 0.075f;
-                    cam.transform.position = new Vector3(move, cam.transform.position.y, cam.transform.position.z);
-                    xMove--;
-                }
-                break;
-            case 3:
-                if (yMove <= 100)
-                {
-                    float move = cam.transform.position.y + 0.075f;
-                    cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
-                    yMove++;
-                }
-                break;
-            case 4:
-                if (yMove >= -100)
-                {
-                    float move = cam.transform.position.y - 0.075f;
-                    cam.transform.position = new Vector3(cam.transform.position.x, move, cam.transform.position.z);
-                    yMove--;
-                }
-                break;
+            move.x = 0;
+            xMove = zoomValue;
         }
+        if (xMove <= -zoomValue && joystick.Horizontal < 0)
+        {
+            move.x = 0;
+            xMove = -zoomValue;
+        }
+        if (yMove >= zoomValue && joystick.Vertical > 0)
+        {
+            move.y = 0;
+            yMove = zoomValue;
+        }
+        if (yMove <= -zoomValue && joystick.Vertical < 0)
+        {
+            move.y = 0;
+            yMove = -zoomValue;
+        }
+
+        cam.transform.position += new Vector3(move.x, move.y, 0);
+        xMove += joystick.Horizontal;
+        yMove += joystick.Vertical;
     }
+
     public void Right()
     {
         moveDir = 1;
@@ -121,5 +148,14 @@ public class CameraManager : MonoBehaviour
     public void Stop()
     {
         moveDir = 0;
+        zooming = 0;
+    }
+    public void In()
+    {
+        zooming = 1;
+    }
+    public void Out()
+    {
+        zooming = -1;
     }
 }

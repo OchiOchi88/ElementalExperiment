@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ts: {fileID: 7769718340817162968, guid: a3617ae2581b97944b8b53fbf6f48b3d, type: 3}
   tpm: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
+  tManager: {fileID: 3091704986624679322, guid: 205627a263c966f468d5fd831e0df894, type: 3}
 --- !u!61 &-3865001281822056828
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -180,4 +181,5 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 60cb1d86c78724a42a56ac85f284c126, type: 3}
   - {fileID: 21300000, guid: a08245eb6cd77dd45a4bd8a73c42b499, type: 3}
   - {fileID: 21300000, guid: e187c468dd85a6848b456e06e13eb8d2, type: 3}
+  - {fileID: 21300000, guid: a8d9e36185a90c6408f9fce6c91f389b, type: 3}
   prefab: {fileID: 3463127764510056596}

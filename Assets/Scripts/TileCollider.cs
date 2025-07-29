@@ -12,6 +12,7 @@ public class TileCollider : MonoBehaviour
     [SerializeField] TileSetter ts;
     [SerializeField] TilePieceManager tpm;
     List <GameObject> victimTile;
+    [SerializeField] TileManager tManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -161,6 +162,10 @@ public class TileCollider : MonoBehaviour
                 victimTile = GetObjectsOutOfCharge();
                 ExecuteOutOfCharge(victimTile);
             }
+            if (myTile.name == "tile60")
+            {
+                tManager.GimicChange();
+            }
             if (myTile.name == "tileFF")
             {
                 //Debug.Log("ステージ失敗...！");
@@ -255,5 +260,64 @@ public class TileCollider : MonoBehaviour
     public void Delete()
     {
         Destroy(transform.gameObject);
+    }
+    public void Change()
+    {
+        Sprite myTile = transform.GetComponent<SpriteRenderer>().sprite;
+        if (myTile.name == "tile10")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(4);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile11")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(5);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile12")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(2);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile13")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(3);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile20")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(7);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile21")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(8);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile22")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(9);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile23")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(10);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile24")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(11);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile31")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(13);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
+        if (myTile.name == "tile32")
+        {
+            Sprite getTile = FindObjectOfType<TileManager>().UpdateTile(12);
+            GetComponent<SpriteRenderer>().sprite = getTile;
+        }
     }
 }

@@ -102,4 +102,14 @@ public class TileManager : MonoBehaviour
             }
         }
     }
+    public void GimicChange()
+    {
+        foreach(TileCollider aTile in allTile)
+        {
+            if (aTile)
+            {
+                aTile.Change();
+            }
+        }
+    }
 }

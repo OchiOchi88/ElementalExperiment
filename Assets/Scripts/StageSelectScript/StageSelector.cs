@@ -117,4 +117,5 @@ public class StageSelector : MonoBehaviour
     {
         Initiate.Fade("TitleScene", col, 1.5f);
     }
+
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class GameCtrler : MonoBehaviour
 {
+    static public int clearStage = 0;
     static public int stage;
     Color col = new Color(0, 0, 0);
     [SerializeField] TileManager tileManager;
@@ -197,6 +198,10 @@ public class GameCtrler : MonoBehaviour
     int eTileCount = 0;
     void Start()
     {
+        //int[] xLen;
+        //int[] yLen;
+        //int[] type;
+        //int[] element = {0,0,0}
         goalCount = 0;
         if(ResultManager.stage != 0)
         {
@@ -214,6 +219,17 @@ public class GameCtrler : MonoBehaviour
         }
             //Debug.Log(StageSelector.startStage);
             gc = GetComponent<GameCtrler>();
+        //
+        //  APIでステージのデータ(x座標、y座標、タイルのタイプ)などを取得し、各変数に代入
+        //
+
+        /*
+         * foreach(int x in xLen)
+         * eTileCount++;
+         * tileManager.SetTile(xLen, yLen, type + 1, eTileCount);
+         * 
+         * 
+         */
         int ind = 0;
         for (int x = -10; x < 11; x++)
         {
@@ -418,5 +434,13 @@ public class GameCtrler : MonoBehaviour
         StageSelector.startStage = 0;
         ResultManager.stage = 0;
         Initiate.Fade("TitleScene", col, 1.5f);
+    }
+    public void StageClear()
+    {
+        if(clearStage <= stage)
+        {
+            clearStage = stage;
+        }
+
     }
 }

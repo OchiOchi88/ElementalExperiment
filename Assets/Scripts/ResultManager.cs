@@ -14,6 +14,7 @@ public class ResultManager : MonoBehaviour
     {
         enabled = true;
         GameCtrler gc = FindObjectOfType<GameCtrler>();
+        gc.StageClear();
         bool isLast = gc.IsLast();
         if (isLast)
         {

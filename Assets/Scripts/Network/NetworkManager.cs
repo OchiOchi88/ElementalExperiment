@@ -6,6 +6,7 @@ using UnityEngine;
 using static RegistUserRepuest;
 using UnityEngine.Networking;
 using System.IO;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 
 public class NetworkManager : MonoBehaviour
@@ -91,15 +92,36 @@ public class NetworkManager : MonoBehaviour
         {
             //通信が成功した場合、返ってきたJSONをオブジェクトに変換
             string resultJson = request.downloadHandler.text;
+            Debug.Log("サーバーからのレスポンス: " + resultJson);
+
             RegistUserResponse response =
-                         JsonConvert.DeserializeObject<RegistUserResponse>(resultJson);
-            //ファイルにユーザーIDを保存
-            this.userName = name;
-            nameData = userName;
-            this.apiToken = response.APIToken;
-            Debug.Log("APIToken : " + response.APIToken);
-            SaveUserData();
-            isSuccess = true;
+                JsonConvert.DeserializeObject<RegistUserResponse>(resultJson);
+
+            Debug.Log("id: " + response.Id);
+            Debug.Log("APIToken: " + response.APIToken);
+
+
+            if (response != null)
+            {
+                this.userName = response.Id;
+                this.apiToken = response.APIToken;
+                Debug.Log("変換後のAPIToken: " + response.APIToken);
+                SaveUserData();
+                isSuccess = true;
+            }
+            else
+            {
+                Debug.Log("デシリアライズ失敗");
+            }
+
+
+            ////ファイルにユーザーIDを保存
+            //this.userName = name;
+            //nameData = userName;
+            //this.apiToken = response.APIToken;
+            //Debug.Log("取得したAPIToken : " + response.APIToken);
+            //SaveUserData();
+            //isSuccess = true;
         }
         result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
     }
@@ -134,7 +156,7 @@ public class NetworkManager : MonoBehaviour
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
         this.userName = saveData.UserName;
         nameData = userName;
-        stage = saveData.Stage;
+        //stage = saveData.Stage;
         Debug.Log("APIToken : " + APIToken);
         return true;
     }
@@ -152,7 +174,7 @@ public class NetworkManager : MonoBehaviour
         string json = reader.ReadToEnd();
         reader.Close();
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        stageData = saveData.Stage;
+        //stageData = saveData.Stage;
         return stageData;
     }
     // ユーザーのレベル(クリアステージ数)を詳細に読み込む
@@ -168,7 +190,7 @@ public class NetworkManager : MonoBehaviour
         string json = reader.ReadToEnd();
         reader.Close();
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        achieveData = saveData.Achievement;
+        //achieveData = saveData.Achievement;
         return achieveData;
     }
 

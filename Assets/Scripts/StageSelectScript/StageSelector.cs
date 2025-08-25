@@ -1,8 +1,13 @@
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
+using static RegistUserRepuest;
+using UnityEngine.Networking;
 
 public class StageSelector : MonoBehaviour
 {
@@ -17,8 +22,31 @@ public class StageSelector : MonoBehaviour
     static public int startStage;
     Color col = new Color(0, 0, 0);
     RectTransform rtf;
+
+    private int lvl;    //  自分のステージデータ
+    private string apiToken;    //  APIトークン
+
+    //  プロパティ
+    public string APIToken
+    {
+        get
+        {
+            return this.apiToken;
+        }
+    }
+    public int Lvl
+    {
+        get
+        {
+            return this.lvl;
+        }
+    }
     void Start()
     {
+        lvl = NetworkManager.LoadUserLvl();
+                maxStage = lvl + 1;
+        Debug.Log(maxStage);
+
         rtf = GetComponent<RectTransform>();
         rtf.anchoredPosition = new Vector3(0, 0, 0);
         isChanged = false;

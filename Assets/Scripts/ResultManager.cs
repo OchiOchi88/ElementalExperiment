@@ -22,6 +22,24 @@ public class ResultManager : MonoBehaviour
             lst.LastStageClear();
         }
         Debug.Log("クリア画面表示完了判定");
+        int nowLvl = NetworkManager.LoadUserLvl();
+            // ユーザーデータを更新して画面も更新
+            StartCoroutine(NetworkManager.Instance.UpdateUser(
+                NetworkManager.nameData,       // 名前
+                nowLvl + 1,              // レベル
+                0,             //  経験値
+                0,              //  所属
+　　　　　      result => {     // 登録終了後の処理
+                if (result == true)
+                {
+                   Debug.Log("ユーザー情報更新が正常に終了しました。");
+               }
+                else
+                {
+                    Debug.Log("ユーザー情報更新が正常に終了しませんでした。");
+
+                }
+            }));
     }
     public void Retry()
     {

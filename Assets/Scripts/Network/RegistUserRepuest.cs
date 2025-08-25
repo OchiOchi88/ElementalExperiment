@@ -1,11 +1,11 @@
 public class RegistUserRepuest
 {
     [JsonProperty("name")]
-    public string Name { get; set; }
+    public string name { get; set; }
     [JsonProperty("stage")]
-    public int Lvl { get; set; }
-    [JsonProperty("exp")]
-    public int Exp { get; set; }
-    [JsonProperty("clan")]
-    public int Clan { get; set; }
+    public int stage { get; set; }
+    [JsonProperty("achievement")]
+    public int achievement { get; set; }
+    [JsonProperty("token")]
+    public int APITtoken { get; set; }
 }

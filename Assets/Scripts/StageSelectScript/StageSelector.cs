@@ -44,7 +44,7 @@ public class StageSelector : MonoBehaviour
     void Start()
     {
         lvl = NetworkManager.LoadUserLvl();
-                maxStage = lvl + 1;
+        maxStage = lvl + 1;
         Debug.Log(maxStage);
 
         rtf = GetComponent<RectTransform>();

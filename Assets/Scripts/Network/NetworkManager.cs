@@ -21,10 +21,11 @@ public class NetworkManager : MonoBehaviour
 
     //private int userID; //  自分のユーザーID
     private string userName;    //  入力される想定の自分のユーザー名
-    private int lvl;    //  自分のステージデータ
+    private int stage;    //  自分のステージデータ
     private string apiToken;    //  APIトークン
     static public string nameData;
-    static public int lvlData;
+    static public int stageData;
+    static public int achieveData;
 
     //  プロパティ
     public string APIToken
@@ -44,11 +45,11 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    public int Lvl
+    public int Stage
     {
         get
         {
-            return this.lvl;
+            return this.stage;
         }
     }
 
@@ -69,16 +70,16 @@ public class NetworkManager : MonoBehaviour
     // 通信用の関数
 
     //ユーザー登録処理
-    public IEnumerator RegistUser(string name, int lvl, int exp, int clan, Action<bool> result)
+    public IEnumerator RegistUser(string name, int stage, int achieve, Action<bool> result)
     {
         //サーバーに送信するオブジェクトを作成
         RegistUserRepuest requestData = new RegistUserRepuest();
-        requestData.Name = name;
-        requestData.Lvl = lvl;
-        requestData.Exp = exp;
-        requestData.Clan = clan;
+        requestData.name = name;
+        requestData.stage = stage;
+        requestData.achievement = achieve;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
+        Debug.Log(json);
         //送信
         UnityWebRequest request = UnityWebRequest.Post(
                     API_BASE_URL + "users/store", json, "application/json");
@@ -133,7 +134,7 @@ public class NetworkManager : MonoBehaviour
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
         this.userName = saveData.UserName;
         nameData = userName;
-        lvl = saveData.Lvl;
+        stage = saveData.Stage;
         Debug.Log("APIToken : " + APIToken);
         return true;
     }
@@ -151,19 +152,34 @@ public class NetworkManager : MonoBehaviour
         string json = reader.ReadToEnd();
         reader.Close();
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        lvlData = saveData.Lvl;
-        return lvlData;
+        stageData = saveData.Stage;
+        return stageData;
+    }
+    // ユーザーのレベル(クリアステージ数)を詳細に読み込む
+    static public int LoadUserAchievement()
+    {
+        if (!File.Exists(Application.persistentDataPath + "/saveData.json"))
+        {
+            return 0;
+        }
+        var reader =
+                   new StreamReader(Application.persistentDataPath + "/saveData.json");
+        Debug.Log(Application.persistentDataPath + "/saveData.json");
+        string json = reader.ReadToEnd();
+        reader.Close();
+        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
+        achieveData = saveData.Achievement;
+        return achieveData;
     }
 
     //ユーザー情報更新
-    public IEnumerator UpdateUser(string name, int lvl, int exp, int clan, Action<bool> result)
+    public IEnumerator UpdateUser(string name, int stage,int achieve, Action<bool> result)
     {
         //サーバーに送信するオブジェクトを作成
         UpdateUserRequest requestData = new UpdateUserRequest();
-        requestData.Name = name;
-        requestData.Lvl = lvl;
-        requestData.Exp = exp;
-        requestData.Clan = clan;
+        requestData.name = name;
+        requestData.stage = stage;
+        requestData.achievement = achieve;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
         //送信

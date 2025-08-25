@@ -20,20 +20,19 @@ public class EndWarning : MonoBehaviour
             bool isSuccess = NetworkManager.Instance.LoadUserData();
             if (isSuccess)
             {
-                SceneManager.LoadScene("StageSelectScene");
+                Debug.Log("ユーザー登録済みです。セーブデータをロードします。");
             }
             else
             {
                 //ユーザーデータが保存されてない場合は登録
                 StartCoroutine(NetworkManager.Instance.RegistUser(
                     Guid.NewGuid().ToString(),           //名前
-                    0,
-                    0,
-                    0,
+                    0,      //  クリアステージ数
+                    0,      //  実績
                 result => {                          //登録終了後の処理
                     if (result == true)
                     {
-                        SceneManager.LoadScene("StageSelectScene");
+                        Debug.Log("ユーザー登録が正常に終了しました。");
                     }
                     else
                     { 

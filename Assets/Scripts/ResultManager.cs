@@ -21,25 +21,31 @@ public class ResultManager : MonoBehaviour
             LastStageText lst = FindObjectOfType<LastStageText>();
             lst.LastStageClear();
         }
-        Debug.Log("クリア画面表示完了判定");
+        //Debug.Log("クリア画面表示完了判定");
         int nowLvl = NetworkManager.LoadUserLvl();
+        Debug.Log("今のところのステージ進捗:" + nowLvl);
+        Debug.Log("クリアしたステージ:" + GameCtrler.stage);
+        if (nowLvl == GameCtrler.stage - 1)
+        {
+            int myAchieve = NetworkManager.LoadUserAchievement();
             // ユーザーデータを更新して画面も更新
             StartCoroutine(NetworkManager.Instance.UpdateUser(
                 NetworkManager.nameData,       // 名前
                 nowLvl + 1,              // レベル
-                0,             //  経験値
-                0,              //  所属
-　　　　　      result => {     // 登録終了後の処理
-                if (result == true)
-                {
-                   Debug.Log("ユーザー情報更新が正常に終了しました。");
+                myAchieve,
+　　　　　      result =>
+           {     // 登録終了後の処理
+               if (result == true)
+               {
+                   Debug.Log("クリアステージ情報更新が正常に終了しました。");
                }
-                else
-                {
-                    Debug.Log("ユーザー情報更新が正常に終了しませんでした。");
+               else
+               {
+                   Debug.Log("クリアステージ情報更新が正常に終了しませんでした。");
 
-                }
-            }));
+               }
+           }));
+        }
     }
     public void Retry()
     {

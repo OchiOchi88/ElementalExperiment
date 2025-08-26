@@ -29,7 +29,7 @@ public class NetworkManager : MonoBehaviour
     static public int achieveData;
 
     //  プロパティ
-    public string APIToken
+    public string Token
     {
         get
         {
@@ -38,7 +38,7 @@ public class NetworkManager : MonoBehaviour
     }
 
 
-    public string UserName
+    public string Name
     {
         get
         {
@@ -97,15 +97,15 @@ public class NetworkManager : MonoBehaviour
             RegistUserResponse response =
                 JsonConvert.DeserializeObject<RegistUserResponse>(resultJson);
 
-            Debug.Log("id: " + response.Id);
-            Debug.Log("APIToken: " + response.APIToken);
+            Debug.Log("id: " + response.Name);
+            Debug.Log("APIToken: " + response.Token);
 
 
             if (response != null)
             {
-                this.userName = response.Id;
-                this.apiToken = response.APIToken;
-                Debug.Log("変換後のAPIToken: " + response.APIToken);
+                this.userName = response.Name;
+                this.apiToken = response.Token;
+                Debug.Log("変換後のAPIToken: " + response.Token);
                 SaveUserData();
                 isSuccess = true;
             }
@@ -130,9 +130,9 @@ public class NetworkManager : MonoBehaviour
     private void SaveUserData()
     {
         SaveData saveData = new SaveData();
-        saveData.UserName = this.userName;
+        saveData.Name = this.userName;
         nameData = userName;
-        saveData.APIToken = this.apiToken;
+        saveData.Token = this.apiToken;
         string json = JsonConvert.SerializeObject(saveData);
         var writer =
                 new StreamWriter(Application.persistentDataPath + "/saveData.json");
@@ -154,44 +154,69 @@ public class NetworkManager : MonoBehaviour
         string json = reader.ReadToEnd();
         reader.Close();
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        this.userName = saveData.UserName;
+        this.userName = saveData.Name;
         nameData = userName;
         //stage = saveData.Stage;
-        Debug.Log("APIToken : " + APIToken);
+        Debug.Log("APIToken : " + Token);
         return true;
+    }
+
+    // ユーザー情報を読み込む
+    public (string, int, int) IndexUserData()
+    {
+        
+        //送信
+        UnityWebRequest request = UnityWebRequest.Post(
+                    API_BASE_URL + "users/index", "", "application/json");
+        request.SetRequestHeader("Authorization", "Bearer " + this.apiToken);
+
+        //yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success
+         && request.responseCode == 200)
+        {
+            //通信が成功した場合、返ってきたJSONをオブジェクトに変換
+            string resultJson = request.downloadHandler.text;
+
+            IndexUserResponse response =
+                JsonConvert.DeserializeObject<IndexUserResponse>(resultJson);
+
+            // すぐにアクセスできるようにゲーム内に情報を保持しておく
+            nameData = response.Name;
+            stageData = response.Stage;
+            achieveData = response.Achievement;
+            Debug.Log("Token設置完了");
+        }
+
+        if (!File.Exists(Application.persistentDataPath + "/saveData.json"))
+        {
+            return (null,0,0);
+        }
+        var reader =
+                   new StreamReader(Application.persistentDataPath + "/saveData.json");
+        Debug.Log(Application.persistentDataPath + "/saveData.json");
+        string json = reader.ReadToEnd();
+        reader.Close();
+        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
+        this.userName = saveData.Name;
+        nameData = userName;
+        apiToken = saveData.Token;
+        return (nameData, stageData, achieveData);
     }
 
     // ユーザーのレベル(クリアステージ数)を詳細に読み込む
     static public int LoadUserLvl()
     {
-        if (!File.Exists(Application.persistentDataPath + "/saveData.json"))
-        {
-            return 0;
-        }
-        var reader =
-                   new StreamReader(Application.persistentDataPath + "/saveData.json");
-        Debug.Log(Application.persistentDataPath + "/saveData.json");
-        string json = reader.ReadToEnd();
-        reader.Close();
-        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        //stageData = saveData.Stage;
         return stageData;
     }
     // ユーザーのレベル(クリアステージ数)を詳細に読み込む
     static public int LoadUserAchievement()
     {
-        if (!File.Exists(Application.persistentDataPath + "/saveData.json"))
-        {
-            return 0;
-        }
-        var reader =
-                   new StreamReader(Application.persistentDataPath + "/saveData.json");
-        Debug.Log(Application.persistentDataPath + "/saveData.json");
-        string json = reader.ReadToEnd();
-        reader.Close();
-        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        //achieveData = saveData.Achievement;
         return achieveData;
+    }
+    static public string LoadUserName()
+    {
+        return nameData;
     }
 
     //ユーザー情報更新
@@ -204,6 +229,8 @@ public class NetworkManager : MonoBehaviour
         requestData.achievement = achieve;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
+        Debug.Log("送信するJSONデータ : "+json + "<-" + requestData.name + "," + requestData.stage + "," + requestData.achievement);
+        Debug.Log("APIToken : " + apiToken);
         //送信
         UnityWebRequest request = UnityWebRequest.Post(
                     API_BASE_URL + "users/update", json, "application/json");
@@ -218,6 +245,8 @@ public class NetworkManager : MonoBehaviour
             // 通信が成功した場合、ファイルに更新したユーザー名を保存
             this.userName = name;
             nameData = userName;
+            stageData = stage;
+            achieveData = achieve;
             SaveUserData();
             isSuccess = true;
         }

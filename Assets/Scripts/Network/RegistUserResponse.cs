@@ -1,9 +1,9 @@
 public class RegistUserResponse
 {
-    [JsonProperty("id")]
-    public string Id { get; set; }
+    [JsonProperty("name")]
+    public string Name { get; set; }
 
     [JsonProperty("token")]
-    public string APIToken { get; set; }
+    public string Token { get; set; }
 }
 

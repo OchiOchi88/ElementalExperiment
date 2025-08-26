@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using System;
 using static RegistUserRepuest;
 using UnityEngine.Networking;
+using JetBrains.Annotations;
 
 public class StageSelector : MonoBehaviour
 {
@@ -43,7 +44,7 @@ public class StageSelector : MonoBehaviour
     }
     void Start()
     {
-        lvl = NetworkManager.LoadUserLvl();
+        (string name, int lvl, int achieve) = NetworkManager.Instance.IndexUserData();
         maxStage = lvl + 1;
         Debug.Log(maxStage);
 

@@ -28,23 +28,23 @@ public class ResultManager : MonoBehaviour
         if (nowLvl == GameCtrler.stage - 1)
         {
             int myAchieve = NetworkManager.LoadUserAchievement();
+            string myName = NetworkManager.LoadUserName();
             // ユーザーデータを更新して画面も更新
             StartCoroutine(NetworkManager.Instance.UpdateUser(
-                NetworkManager.nameData,       // 名前
+                myName,       // 名前
                 nowLvl + 1,              // レベル
                 myAchieve,
 　　　　　      result =>
-           {     // 登録終了後の処理
-               if (result == true)
-               {
-                   Debug.Log("クリアステージ情報更新が正常に終了しました。");
-               }
-               else
-               {
-                   Debug.Log("クリアステージ情報更新が正常に終了しませんでした。");
-
-               }
-           }));
+            {     // 登録終了後の処理
+                if (result == true)
+                {
+                    Debug.Log("クリアステージ情報更新が正常に終了しました。");
+                }
+                else
+                {
+                    Debug.Log("クリアステージ情報更新が正常に終了しませんでした。");
+                }
+            }));
         }
     }
     public void Retry()

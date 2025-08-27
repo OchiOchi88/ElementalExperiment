@@ -23,6 +23,19 @@ public class GameCtrler : MonoBehaviour
     List<ElementMover> eMover = new List<ElementMover>();
     GameCtrler gc;
     int goalCount;
+    static public int[] tileX;
+    static public int[] tileY;
+    static public int[] tileType;
+
+    static public int[] startElementX;
+    static public int[] startElementY;
+    static public int[] startElementType;
+    static public int[] goalElementX;
+    static public int[] goalElementY;
+    static public int[] goalElementType;
+
+    static public int[] palette;
+    
     int[][] tileinfo = new int [][] { new int[] { },
         new int[]{ 1,1,1,1,1 },
         new int[]{ 1,1,1,1,1 },
@@ -198,6 +211,7 @@ public class GameCtrler : MonoBehaviour
     int eTileCount = 0;
     void Start()
     {
+
         //int[] xLen;
         //int[] yLen;
         //int[] type;
@@ -219,47 +233,52 @@ public class GameCtrler : MonoBehaviour
         }
             //Debug.Log(StageSelector.startStage);
             gc = GetComponent<GameCtrler>();
+        (tileX, tileY, tileType) = NetworkManager.Instance.GetTileData(stage);
         //
         //  APIでステージのデータ(x座標、y座標、タイルのタイプ)などを取得し、各変数に代入
         //
 
-        /*
-         * foreach(int x in xLen)
-         * eTileCount++;
-         * tileManager.SetTile(xLen, yLen, type + 1, eTileCount);
-         * 
-         * 
-         */
-        int ind = 0;
-        for (int x = -10; x < 11; x++)
-        {
-            for (int y = -10; y < 11; y++)
-            {
-                if (stageinfo[stage][ind] == -1)
-                {
-                    y = 11;
-                    ind++;
-                    continue;
-                }
-                else if (stageinfo[stage][ind] == 0)
-                {
-                    ind++;
-                    continue;
-                }
-                else if (stageinfo[stage][ind] == 99)
-                {
-                    eTileCount++;
-                    tileManager.SetTile(x, y, stageinfo[stage][ind], eTileCount);
-                    ind++;
-                }
-                else
-                {
-                    tileManager.SetTile(x, y, stageinfo[stage][ind] + 1, eTileCount);
-                    ind++;
+        Debug.Log(tileType);
+         foreach (int tiles in tileType)
+         {
+            Debug.Log(tileType[tiles]);
+            eTileCount++;
+            tileManager.SetTile(tileX[tiles], tileY[tiles], tileType[tiles], eTileCount);
+         }
+         
+        
+        
 
-                }
-            }
-        }
+       //int ind = 0;
+       // for (int x = -10; x < 11; x++)
+       // {
+       //     for (int y = -10; y < 11; y++)
+       //     {
+       //         if (stageinfo[stage][ind] == -1)
+       //         {
+       //             y = 11;
+       //             ind++;
+       //             continue;
+       //         }
+       //         else if (stageinfo[stage][ind] == 0)
+       //         {
+       //             ind++;
+       //             continue;
+       //         }
+       //         else if (stageinfo[stage][ind] == 99)
+       //         {
+       //             eTileCount++;
+       //             tileManager.SetTile(x, y, stageinfo[stage][ind], eTileCount);
+       //             ind++;
+       //         }
+       //         else
+       //         {
+       //             tileManager.SetTile(x, y, stageinfo[stage][ind] + 1, eTileCount);
+       //             ind++;
+
+       //         }
+       //     }
+       // }
         int tileKind = 0;
         int tilePalced = 0;
         foreach(int tile in tileinfo[stage])
@@ -283,36 +302,45 @@ public class GameCtrler : MonoBehaviour
         goalCount = 0;
         tileManager.AllDelete();
         gc = GetComponent<GameCtrler>();
-        int ind = 0;
-        for (int x = -10; x < 11; x++)
-        {
-            for (int y = -10; y < 11; y++)
-            {
-                if (stageinfo[stage][ind] == -1)
-                {
-                    y = 11;
-                    ind++;
-                    continue;
-                }
-                else if (stageinfo[stage][ind] == 0)
-                {
-                    ind++;
-                    continue;
-                }
-                else if (stageinfo[stage][ind] == 99)
-                {
-                    eTileCount++;
-                    tileManager.SetTile(x, y, stageinfo[stage][ind],eTileCount);
-                    ind++;
-                }
-                else
-                {
-                    tileManager.SetTile(x, y, stageinfo[stage][ind] + 1,eTileCount);
-                    ind++;
 
-                }
-            }
+
+        foreach (int tiles in tileType)
+        {
+            eTileCount++;
+            tileManager.SetTile(tileX[tiles], tileY[tiles], tileType[tiles], eTileCount);
         }
+
+
+        //int ind = 0;
+        //for (int x = -10; x < 11; x++)
+        //{
+        //    for (int y = -10; y < 11; y++)
+        //    {
+        //        if (stageinfo[stage][ind] == -1)
+        //        {
+        //            y = 11;
+        //            ind++;
+        //            continue;
+        //        }
+        //        else if (stageinfo[stage][ind] == 0)
+        //        {
+        //            ind++;
+        //            continue;
+        //        }
+        //        else if (stageinfo[stage][ind] == 99)
+        //        {
+        //            eTileCount++;
+        //            tileManager.SetTile(x, y, stageinfo[stage][ind],eTileCount);
+        //            ind++;
+        //        }
+        //        else
+        //        {
+        //            tileManager.SetTile(x, y, stageinfo[stage][ind] + 1,eTileCount);
+        //            ind++;
+
+        //        }
+        //    }
+        //}
         int tileKind = 0;
         int tilePalced = 0;
         foreach (int tile in tileinfo[stage])

@@ -24,6 +24,13 @@ public class NetworkManager : MonoBehaviour
     private string userName;    //  入力される想定の自分のユーザー名
     private int stage;    //  自分のステージデータ
     private string apiToken;    //  APIトークン
+    private int[] tileX;
+    private int[] tileY;
+    private int[] tileType;
+    private int[] eleX;
+    private int[] eleY;
+    private int[] eleType;
+    private int[] paletteType;
     static public string nameData;
     static public int stageData;
     static public int achieveData;
@@ -54,6 +61,56 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    public int[] TileX
+    {
+        get
+        {
+            return this.tileX;
+        }
+    }
+    public int[] TileY
+    {
+        get
+        {
+            return this.tileY;
+        }
+    }
+    public int[] TileType
+    {
+        get
+        {
+            return this.tileType;
+        }
+    }
+    public int[] EleX
+    {
+        get
+        {
+            return this.eleX;
+        }
+    }
+    public int[] EleY
+    {
+        get
+        {
+            return this.eleY;
+        }
+    }
+    public int[] EleType
+    {
+        get
+        {
+            return this.eleType;
+        }
+    }
+
+    public int[] PaletteType
+    {
+        get
+        {
+            return this.paletteType;
+        }
+    }
     private static NetworkManager instance;
     public static NetworkManager Instance
     {
@@ -252,5 +309,32 @@ public class NetworkManager : MonoBehaviour
         }
 
         result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
+    }
+    // タイル情報を読み込む
+    public (int[], int[], int[]) GetTileData(int stage)
+    {
+
+        //送信
+        UnityWebRequest request = UnityWebRequest.Post(
+                    API_BASE_URL + "stages/get/" + stage, "", "application/json");
+
+        //yield return request.SendWebRequest();
+
+        TileLoadResponse response;
+
+        if (request.result == UnityWebRequest.Result.Success
+         && request.responseCode == 200)
+        {
+            //通信が成功した場合、返ってきたJSONをオブジェクトに変換
+            string resultJson = request.downloadHandler.text;
+
+            response =
+                JsonConvert.DeserializeObject<TileLoadResponse>(resultJson);
+            Debug.Log(response.TileX);
+            this.tileX = response.TileX;
+            this.tileY = response.TileY;
+            this.tileType = response.TileType;
+        }
+        return (tileX, tileY, tileType);
     }
 }

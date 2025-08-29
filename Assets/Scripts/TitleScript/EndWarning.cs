@@ -28,7 +28,6 @@ public class EndWarning : MonoBehaviour
                 StartCoroutine(NetworkManager.Instance.RegistUser(
                     Guid.NewGuid().ToString(),           //名前
                     0,      //  クリアステージ数
-                    0,      //  実績
                 result => {                          //登録終了後の処理
                     if (result == true)
                     {

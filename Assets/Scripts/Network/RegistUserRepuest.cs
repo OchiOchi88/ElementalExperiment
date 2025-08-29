@@ -6,6 +6,4 @@ public class RegistUserRepuest
     public string Token { get; set; }
     [JsonProperty("stage")]
     public int stage { get; set; }
-    [JsonProperty("achievement")]
-    public int achievement { get; set; }
 }

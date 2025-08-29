@@ -128,13 +128,12 @@ public class NetworkManager : MonoBehaviour
     // 通信用の関数
 
     //ユーザー登録処理
-    public IEnumerator RegistUser(string name, int stage, int achieve, Action<bool> result)
+    public IEnumerator RegistUser(string name, int stage, Action<bool> result)
     {
         //サーバーに送信するオブジェクトを作成
         RegistUserRepuest requestData = new RegistUserRepuest();
         requestData.name = name;
         requestData.stage = stage;
-        requestData.achievement = achieve;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
         Debug.Log(json);
@@ -330,7 +329,7 @@ public class NetworkManager : MonoBehaviour
 
             response =
                 JsonConvert.DeserializeObject<TileLoadResponse>(resultJson);
-            Debug.Log(response.TileX);
+            Debug.Log("レスポンス : "+response.TileX);
             this.tileX = response.TileX;
             this.tileY = response.TileY;
             this.tileType = response.TileType;

@@ -33,7 +33,6 @@ public class ResultManager : MonoBehaviour
             StartCoroutine(NetworkManager.Instance.UpdateUser(
                 myName,       // 名前
                 nowLvl + 1,              // レベル
-                myAchieve,
 　　　　　      result =>
             {     // 登録終了後の処理
                 if (result == true)

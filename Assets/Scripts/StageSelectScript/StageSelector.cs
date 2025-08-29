@@ -44,7 +44,7 @@ public class StageSelector : MonoBehaviour
     }
     void Start()
     {
-        (string name, int lvl, int achieve) = NetworkManager.Instance.IndexUserData();
+        (string name, int lvl) = NetworkManager.Instance.IndexUserData();
         maxStage = lvl + 1;
         Debug.Log(maxStage);
 

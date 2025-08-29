@@ -99,8 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a9b531a2d1628c46b2d029d1e2694dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ts: {fileID: 7769718340817162968, guid: a3617ae2581b97944b8b53fbf6f48b3d, type: 3}
-  tpm: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
+  tileSetter: {fileID: 7769718340817162968, guid: a3617ae2581b97944b8b53fbf6f48b3d, type: 3}
+  tilePieceManager: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
   tManager: {fileID: 3091704986624679322, guid: 205627a263c966f468d5fd831e0df894, type: 3}
 --- !u!61 &-3865001281822056828
 BoxCollider2D:

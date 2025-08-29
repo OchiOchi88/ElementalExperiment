@@ -33,7 +33,6 @@ public class NetworkManager : MonoBehaviour
     private int[] paletteType;
     static public string nameData;
     static public int stageData;
-    static public int achieveData;
 
     //  プロパティ
     public string Token
@@ -132,8 +131,8 @@ public class NetworkManager : MonoBehaviour
     {
         //サーバーに送信するオブジェクトを作成
         RegistUserRepuest requestData = new RegistUserRepuest();
-        requestData.name = name;
-        requestData.stage = stage;
+        requestData.Name = name;
+        requestData.Stage = stage;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
         Debug.Log(json);
@@ -169,15 +168,6 @@ public class NetworkManager : MonoBehaviour
             {
                 Debug.Log("デシリアライズ失敗");
             }
-
-
-            ////ファイルにユーザーIDを保存
-            //this.userName = name;
-            //nameData = userName;
-            //this.apiToken = response.APIToken;
-            //Debug.Log("取得したAPIToken : " + response.APIToken);
-            //SaveUserData();
-            //isSuccess = true;
         }
         result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
     }
@@ -218,7 +208,7 @@ public class NetworkManager : MonoBehaviour
     }
 
     // ユーザー情報を読み込む
-    public (string, int, int) IndexUserData()
+    public (string, int) IndexUserData()
     {
         
         //送信
@@ -240,13 +230,12 @@ public class NetworkManager : MonoBehaviour
             // すぐにアクセスできるようにゲーム内に情報を保持しておく
             nameData = response.Name;
             stageData = response.Stage;
-            achieveData = response.Achievement;
             Debug.Log("Token設置完了");
         }
 
         if (!File.Exists(Application.persistentDataPath + "/saveData.json"))
         {
-            return (null,0,0);
+            return (null,0);
         }
         var reader =
                    new StreamReader(Application.persistentDataPath + "/saveData.json");
@@ -257,7 +246,7 @@ public class NetworkManager : MonoBehaviour
         this.userName = saveData.Name;
         nameData = userName;
         apiToken = saveData.Token;
-        return (nameData, stageData, achieveData);
+        return (nameData, stageData);
     }
 
     // ユーザーのレベル(クリアステージ数)を詳細に読み込む
@@ -268,7 +257,7 @@ public class NetworkManager : MonoBehaviour
     // ユーザーのレベル(クリアステージ数)を詳細に読み込む
     static public int LoadUserAchievement()
     {
-        return achieveData;
+        return 0;
     }
     static public string LoadUserName()
     {
@@ -276,16 +265,15 @@ public class NetworkManager : MonoBehaviour
     }
 
     //ユーザー情報更新
-    public IEnumerator UpdateUser(string name, int stage,int achieve, Action<bool> result)
+    public IEnumerator UpdateUser(string name, int stage, Action<bool> result)
     {
         //サーバーに送信するオブジェクトを作成
         UpdateUserRequest requestData = new UpdateUserRequest();
-        requestData.name = name;
-        requestData.stage = stage;
-        requestData.achievement = achieve;
+        requestData.Name = name;
+        requestData.Stage = stage;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
-        Debug.Log("送信するJSONデータ : "+json + "<-" + requestData.name + "," + requestData.stage + "," + requestData.achievement);
+        Debug.Log("送信するJSONデータ : "+json + "<-" + requestData.Name + "," + requestData.Stage);
         Debug.Log("APIToken : " + apiToken);
         //送信
         UnityWebRequest request = UnityWebRequest.Post(
@@ -302,7 +290,6 @@ public class NetworkManager : MonoBehaviour
             this.userName = name;
             nameData = userName;
             stageData = stage;
-            achieveData = achieve;
             SaveUserData();
             isSuccess = true;
         }

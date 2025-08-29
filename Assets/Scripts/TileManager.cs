@@ -49,7 +49,6 @@ public class TileManager : MonoBehaviour
     }
     public void StandBy()
     {
-        //Debug.Log("マネージャースタンバイ");
         foreach (TileCollider atc in tc)
         {
             if (atc)

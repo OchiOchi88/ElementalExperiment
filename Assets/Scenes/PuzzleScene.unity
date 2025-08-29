@@ -3708,10 +3708,10 @@ MonoBehaviour:
   cloneTileManager: {fileID: -7811344025497076380, guid: e739e54f3f343bb4bb49d320f1c2f82b, type: 3}
   elementManager: {fileID: 792701204763863931, guid: 96793ae13e08c714caed8eee81f50528, type: 3}
   goalElementManager: {fileID: -6757727765250863774, guid: 1b9b4f248e6c52246acb9ed524271372, type: 3}
-  tpm: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
-  selectshower: {fileID: 4706755936863599162, guid: 8befd3d2f052f1f44b8ad220f18a6339, type: 3}
+  tilePieceManager: {fileID: 6854332103768933958, guid: 82a8f60d9ddea7645a2c3ea6448ff17e, type: 3}
+  selectShower: {fileID: 4706755936863599162, guid: 8befd3d2f052f1f44b8ad220f18a6339, type: 3}
   clearPanel: {fileID: 997565243}
-  lst: {fileID: 1923000199}
+  lastStageText: {fileID: 1923000199}
   pausePanel: {fileID: 1230208587}
   pauseButton: {fileID: 960249563}
 --- !u!1 &2007013444

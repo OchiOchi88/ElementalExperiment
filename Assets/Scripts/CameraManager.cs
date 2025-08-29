@@ -15,7 +15,7 @@ public class CameraManager : MonoBehaviour
     float xMove = 0;
     float yMove = 0;
     float zoomValue = 0;
-    int moveDir = 0;
+//    int moveDir = 0;
     int zooming = 0;
     const float speed = 0.075f;
     FixedJoystick joystick;
@@ -121,25 +121,25 @@ public class CameraManager : MonoBehaviour
         yMove += joystick.Vertical;
     }
 
-    public void Right()
-    {
-        moveDir = 1;
-    }
-    public void Left()
-    {
-        moveDir = 2;
-    }
-    public void Up()
-    {
-        moveDir = 3;
-    }
-    public void Down()
-    {
-        moveDir = 4;
-    }
+    //public void Right()
+    //{
+    //    moveDir = 1;
+    //}
+    //public void Left()
+    //{
+    //    moveDir = 2;
+    //}
+    //public void Up()
+    //{
+    //    moveDir = 3;
+    //}
+    //public void Down()
+    //{
+    //    moveDir = 4;
+    //}
     public void Stop()
     {
-        moveDir = 0;
+        //moveDir = 0;
         zooming = 0;
     }
     public void In()

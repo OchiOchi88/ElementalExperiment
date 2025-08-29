@@ -6,9 +6,7 @@ using Newtonsoft.Json;
 public class UpdateUserRequest
 {
     [JsonProperty("name")]
-    public string name { get; set; }
+    public string Name { get; set; }
     [JsonProperty("stage")]
-    public int stage { get; set; }
-    [JsonProperty("achievement")]
-    public int achievement { get; set; }
+    public int Stage { get; set; }
 }

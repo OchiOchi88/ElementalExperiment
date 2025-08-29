@@ -29,29 +29,23 @@ public class TileSetter : MonoBehaviour
     void Update()
     {
     }
+    //  空白タイルがタッチされたなら事前にパレットからタイルが選ばれていれば設置する処理
     public void OnMouseDown()
     {
         tm.StandBy();
         isTouched = true;
-        if(isTouched == true)
-        {
-            //Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + " : " + transform.gameObject.name + "がスタンバイ完了！");
-        }
         ts.SetTile(transform.GetComponent<SpriteRenderer>().sprite);
     }
     public void GetSR()
     {
-        //Debug.Log(transform.gameObject.name);
         if(isTouched == true)
         {
-            //Debug.Log("mySprite:" + transform.GetComponent<SpriteRenderer>().sprite);
             tm.GetsRenderer(transform.GetComponent<SpriteRenderer>().sprite);
-            //Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + "を設置完了！");
         }
     }
+    //  パレットからほかのタイルが選択されたときに直前まで選んでいたタイルの設置スタンバイをキャンセルする処理
     public void CancelChoose()
     {
-        //Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + " : " + transform.gameObject.name + "キャンセル関数に入った");
         if (isTouched == true)
         {
             Debug.Log(transform.GetComponent<SpriteRenderer>().sprite.name + "はスタンバイをキャンセルしました！");

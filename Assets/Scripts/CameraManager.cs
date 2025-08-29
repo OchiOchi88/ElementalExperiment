@@ -34,6 +34,7 @@ public class CameraManager : MonoBehaviour
     }
     public void ZoomIn()
     {
+        //  最大倍率ではなく、ズームインボタンが押されていたら
         if (zooming == 1 && zoomValue < 100)
         {
             cam.GetComponent<Camera>().orthographicSize -= 0.07f;
@@ -50,6 +51,7 @@ public class CameraManager : MonoBehaviour
     }
     public void ZoomOut()
     {
+        //  最小倍率ではなく、ズームアウトボタンが押されていたら
         if (zooming == -1 && zoomValue > 0)
         {
             cam.GetComponent<Camera>().orthographicSize += 0.07f;
@@ -57,6 +59,7 @@ public class CameraManager : MonoBehaviour
             st.ZoomOut();
             tpm.ZoomOut();
             zoomValue -= 1.0f;
+            //  ズームアウトに伴ってカメラの位置を初期位置に向かわせる
             if (xMove >= zoomValue)
             {
                 xMove--;

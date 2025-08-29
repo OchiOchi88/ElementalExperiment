@@ -27,7 +27,7 @@ public class EndWarning : MonoBehaviour
                 //ユーザーデータが保存されてない場合は登録
                 StartCoroutine(NetworkManager.Instance.RegistUser(
                     Guid.NewGuid().ToString(),           //名前
-                    0,      //  クリアステージ数
+                   0,      //  クリアステージ数
                 result => {                          //登録終了後の処理
                     if (result == true)
                     {

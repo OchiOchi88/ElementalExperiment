@@ -1,9 +1,9 @@
 public class ElementLoadResponse 
 {
     [JsonProperty("x")]
-    public int[] ElementX { get; set; }
+    public int X { get; set; }
     [JsonProperty("y")]
-    public int[] ElementY { get; set; }
+    public int Y { get; set; }
     [JsonProperty("type")]
-    public int[] ElementType { get; set; }
+    public int Type { get; set; }
 }

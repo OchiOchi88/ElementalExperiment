@@ -1,9 +1,9 @@
 public class TileLoadResponse
 {
     [JsonProperty("x")]
-    public int[] TileX { get; set; }
+    public int X { get; set; }
     [JsonProperty("y")]
-    public int[] TileY { get; set; }
+    public int Y { get; set; }
     [JsonProperty("type")]
-    public int[] TileType { get; set; }
+    public int Type { get; set; }
 }

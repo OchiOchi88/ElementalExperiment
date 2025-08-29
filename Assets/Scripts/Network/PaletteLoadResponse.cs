@@ -1,5 +1,5 @@
 public class PaletteLoadResponse 
 {
     [JsonProperty("type")]
-    public int[] PaletteType { get; set; }
+    public int Type { get; set; }
 }

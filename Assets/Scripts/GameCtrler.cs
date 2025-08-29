@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Threading;
 using Unity.Properties;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class GameCtrler : MonoBehaviour
 {
     static public int clearStage = 0;
     static public int stage;
-    Color col = new Color(0, 0, 0);
+    UnityEngine.Color col = new UnityEngine.Color(0, 0, 0);
     [SerializeField] TileManager tileManager;
     [SerializeField] TileManager cloneTileManager;
     [SerializeField] ElementManager elementManager;
@@ -212,10 +215,6 @@ public class GameCtrler : MonoBehaviour
     void Start()
     {
 
-        //int[] xLen;
-        //int[] yLen;
-        //int[] type;
-        //int[] element = {0,0,0}
         goalCount = 0;
 
         //  ステージ選択のシーンからステージのレベルを受け取る
@@ -237,63 +236,87 @@ public class GameCtrler : MonoBehaviour
 
         //  受け取ったステージのレベルを元にDBからステージを受け取る
             gc = GetComponent<GameCtrler>();
-        (tileX, tileY, tileType) = NetworkManager.Instance.GetTileData(stage);
+        StartCoroutine(NetworkManager.Instance.GetTileData(stage,
+                result => {                          //登録終了後の処理
+                    if (result == true)
+                    {
+                        Debug.Log("ステージ読み込み成功");
+                        GenerateStage();
+                    }
+                    else
+                    {
+                        Debug.Log("ステージ読み込み失敗");
+                    }
+                }));
+        //(tileX, tileY, tileType) = NetworkManager.Instance.SendTileData();
+        //(eleX, eleY, eleType) = NetworkManager.Instance.GetElementData(stage);
+        //(PaletteX, PaletteY, PaletteType) = NetworkManager.Instance.GetPlaetteData(stage);
         //
         //  APIでステージのデータ(x座標、y座標、タイルのタイプ)などを取得し、各変数に代入
         //
 
-        Debug.Log(tileType);
 
-        //  ステージ生成
-        //foreach (int tiles in tileType)
+
+
+
+        //int ind = 0;
+        //for (int x = -10; x < 11; x++)
         //{
-        //    Debug.Log(tileType[tiles]);
-        //    eTileCount++;
-        //    tileManager.SetTile(tileX[tiles], tileY[tiles], tileType[tiles], eTileCount);
+        //    for (int y = -10; y < 11; y++)
+        //    {
+        //        if (stageInfo[stage][ind] == -1)
+        //        {
+        //            y = 11;
+        //            ind++;
+        //            continue;
+        //        }
+        //        else if (stageInfo[stage][ind] == 0)
+        //        {
+        //            ind++;
+        //            continue;
+        //        }
+        //        else if (stageInfo[stage][ind] == 99)
+        //        {
+        //            eTileCount++;
+        //            tileManager.SetTile(x, y, stageInfo[stage][ind], eTileCount);
+        //            ind++;
+        //        }
+        //        else
+        //        {
+        //            tileManager.SetTile(x, y, stageInfo[stage][ind] + 1, eTileCount);
+        //            ind++;
+
+        //        }
+        //    }
         //}
 
 
+    }
+    private void GenerateStage()
+    {
+        Debug.Log(tileType);
 
-
-        int ind = 0;
-        for (int x = -10; x < 11; x++)
+        //  ステージ生成
+        for (int tile = 0; tile < tileType.Length; tile++)
         {
-            for (int y = -10; y < 11; y++)
+            //Debug.Log(tileType.Length);
+            //Debug.Log(tileType[tile]);
+            eTileCount++;
+            if (tileType[tile] != 99)
             {
-                if (stageInfo[stage][ind] == -1)
-                {
-                    y = 11;
-                    ind++;
-                    continue;
-                }
-                else if (stageInfo[stage][ind] == 0)
-                {
-                    ind++;
-                    continue;
-                }
-                else if (stageInfo[stage][ind] == 99)
-                {
-                    eTileCount++;
-                    tileManager.SetTile(x, y, stageInfo[stage][ind], eTileCount);
-                    ind++;
-                }
-                else
-                {
-                    tileManager.SetTile(x, y, stageInfo[stage][ind] + 1, eTileCount);
-                    ind++;
-
-                }
+                tileType[tile]++;
             }
+            tileManager.SetTile(tileX[tile], tileY[tile], tileType[tile], eTileCount);
         }
 
         //  パレットの生成
         int tileKind = 0;
         int tilePalced = 0;
-        foreach(int tile in tileInfo[stage])
+        foreach (int tile in tileInfo[stage])
         {
-            if(tile == 1)
+            if (tile == 1)
             {
-                tilePieceManager.SetTilePiece(tileKind,tilePalced);
+                tilePieceManager.SetTilePiece(tileKind, tilePalced);
                 tilePalced++;
             }
             tileKind++;
@@ -482,5 +505,35 @@ public class GameCtrler : MonoBehaviour
             clearStage = stage;
         }
 
+    }
+    static public void InitTile(int count)
+    {
+        tileX = new int[count];
+        tileY = new int[count];
+        tileType = new int[count];
+    }
+    static public void GetTileData(int x, int y, int type,int i) 
+    {
+        Debug.Log(x);
+        tileX[i] = x;
+        tileY[i] = y;
+        tileType[i] = type;
+        //Debug.Log("タイル情報スタンバイ");
+    }
+    static public void GetElementData(int x, int y, int type, int i)
+    {
+        Debug.Log(x);
+        tileX[i] = x;
+        tileY[i] = y;
+        tileType[i] = type;
+        //Debug.Log("タイル情報スタンバイ");
+    }
+    static public void GetPaletteData(int type)
+    {
+        //Debug.Log(x);
+        //tileX[i] = x;
+        //tileY[i] = y;
+        //tileType[i] = type;
+        //Debug.Log("タイル情報スタンバイ");
     }
 }

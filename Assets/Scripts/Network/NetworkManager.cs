@@ -131,19 +131,19 @@ public class NetworkManager : MonoBehaviour
     {
         //サーバーに送信するオブジェクトを作成
         RegistUserRepuest requestData = new RegistUserRepuest();
-        requestData.Name = name;
-        requestData.Stage = stage;
+        requestData.name = name;
+        requestData.stage = stage;
         //サーバーに送信するオブジェクトをJSONに変換
         string json = JsonConvert.SerializeObject(requestData);
         Debug.Log(json);
         //送信
         UnityWebRequest request = UnityWebRequest.Post(
                     API_BASE_URL + "users/store", json, "application/json");
-
         yield return request.SendWebRequest();
         bool isSuccess = false;
+        Debug.Log(request.responseCode);
         if (request.result == UnityWebRequest.Result.Success
-    && request.responseCode == 200)
+    && request.responseCode == 201)
         {
             //通信が成功した場合、返ってきたJSONをオブジェクトに変換
             string resultJson = request.downloadHandler.text;
@@ -169,7 +169,11 @@ public class NetworkManager : MonoBehaviour
                 Debug.Log("デシリアライズ失敗");
             }
         }
-        result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
+        else
+        {
+            Debug.Log("500!!!");
+        }
+            result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
     }
 
     //  ユーザー情報を保存する
@@ -297,30 +301,101 @@ public class NetworkManager : MonoBehaviour
         result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
     }
     // タイル情報を読み込む
-    public (int[], int[], int[]) GetTileData(int stage)
+    public IEnumerator GetTileData(int stage, Action<bool> result)
     {
 
         //送信
-        UnityWebRequest request = UnityWebRequest.Post(
-                    API_BASE_URL + "stages/get/" + stage, "", "application/json");
+        UnityWebRequest tileRequest = UnityWebRequest.Get(
+                    API_BASE_URL + "tiles/get/" + stage);
+        UnityWebRequest elementRequest = UnityWebRequest.Get(
+            API_BASE_URL + "elements/get/" + stage);
+        UnityWebRequest paletteRequest = UnityWebRequest.Get(
+            API_BASE_URL + "palettes/get/" + stage);
 
-        //yield return request.SendWebRequest();
-
-        TileLoadResponse response;
-
-        if (request.result == UnityWebRequest.Result.Success
-         && request.responseCode == 200)
+        yield return tileRequest.SendWebRequest();
+        bool isSuccess = false;
+        Debug.Log(tileRequest.responseCode);
+        if (tileRequest.result == UnityWebRequest.Result.Success
+         && tileRequest.responseCode == 200)
         {
             //通信が成功した場合、返ってきたJSONをオブジェクトに変換
-            string resultJson = request.downloadHandler.text;
-
-            response =
-                JsonConvert.DeserializeObject<TileLoadResponse>(resultJson);
-            Debug.Log("レスポンス : "+response.TileX);
-            this.tileX = response.TileX;
-            this.tileY = response.TileY;
-            this.tileType = response.TileType;
+            string tileResultJson = tileRequest.downloadHandler.text;
+            Debug.Log(tileResultJson);
+            List<TileLoadResponse> tileResponse =
+                JsonConvert.DeserializeObject<List<TileLoadResponse>>(tileResultJson);
+            //Debug.Log("レスポンス : "+response);
+            // 必要な大きさで配列を確保
+            this.tileX = new int[tileResponse.Count];
+            this.tileY = new int[tileResponse.Count];
+            this.tileType = new int[tileResponse.Count];
+            Debug.Log(tileResponse.Count);
+            GameCtrler.InitTile(tileResponse.Count);
+            for (int i = 0; i < tileResponse.Count; i++)
+            {
+                Debug.Log("レスポンス："+ tileResponse[i].X);  //  0になっていた
+                this.tileX[i] = tileResponse[i].X;
+                this.tileY[i] = tileResponse[i].Y;
+                this.tileType[i] = tileResponse[i].Type;
+                Debug.Log("変数：" +this.TileX[i]);           //  0になっていた
+                GameCtrler.GetTileData(tileX[i], tileY[i], tileType[i], i);
+            }
         }
+        yield return elementRequest.SendWebRequest();
+        Debug.Log(elementRequest.responseCode);
+        if (elementRequest.result == UnityWebRequest.Result.Success
+         && elementRequest.responseCode == 200)
+        {
+            //通信が成功した場合、返ってきたJSONをオブジェクトに変換
+            string elementResultJson = elementRequest.downloadHandler.text;
+            Debug.Log(elementResultJson);
+            List<ElementLoadResponse> elementResponse =
+                JsonConvert.DeserializeObject<List<ElementLoadResponse>>(elementResultJson);
+            //Debug.Log("レスポンス : "+response);
+            // 必要な大きさで配列を確保
+            this.tileX = new int[elementResponse.Count];
+            this.tileY = new int[elementResponse.Count];
+            this.tileType = new int[elementResponse.Count];
+            Debug.Log(elementResponse.Count);
+            GameCtrler.InitTile(elementResponse.Count);
+            for (int i = 0; i < elementResponse.Count; i++)
+            {
+                Debug.Log("レスポンス：" + elementResponse[i].X);  //  0になっていた
+                this.eleX[i] = elementResponse[i].X;
+                this.eleY[i] = elementResponse[i].Y;
+                this.eleType[i] = elementResponse[i].Type;
+                Debug.Log("変数：" + this.TileX[i]);           //  0になっていた
+                GameCtrler.GetElementData(tileX[i], tileY[i], tileType[i], i);
+            }
+        }
+        yield return paletteRequest.SendWebRequest();
+        Debug.Log(paletteRequest.responseCode);
+        if (paletteRequest.result == UnityWebRequest.Result.Success
+         && paletteRequest.responseCode == 200)
+        {
+            isSuccess = true;
+            //通信が成功した場合、返ってきたJSONをオブジェクトに変換
+            string paletteResultJson = paletteRequest.downloadHandler.text;
+            Debug.Log(paletteResultJson);
+            List<PaletteLoadResponse> paletteResponse =
+                JsonConvert.DeserializeObject<List<PaletteLoadResponse>>(paletteResultJson);
+            //Debug.Log("レスポンス : "+response);
+            // 必要な大きさで配列を確保
+            this.tileX = new int[paletteResponse.Count];
+            this.tileY = new int[paletteResponse.Count];
+            this.tileType = new int[paletteResponse.Count];
+            Debug.Log(paletteResponse.Count);
+            GameCtrler.InitTile(paletteResponse.Count);
+            for (int i = 0; i < paletteResponse.Count; i++)
+            {
+                this.paletteType[i] = paletteResponse[i].Type;
+                Debug.Log("変数：" + this.TileX[i]);           //  0になっていた
+                GameCtrler.GetPaletteData(tileType[i]);
+            }
+        }
+        result?.Invoke(isSuccess);
+    }
+    public (int[], int[], int[]) SendTileData()
+    {
         return (tileX, tileY, tileType);
     }
 }

@@ -17,7 +17,7 @@ public class NetworkManager : MonoBehaviour
     const string API_BASE_URL = "http://localhost:8000/api/";
 #else
     //  本番環境で使用する値をセット
-    const string API_BASE_URL = "http://azure.com/api/";
+    const string API_BASE_URL = "http://ge202403.japaneast.cloudapp.azure.com/api/";
 #endif
 
     //private int userID; //  自分のユーザーID
@@ -352,19 +352,32 @@ public class NetworkManager : MonoBehaviour
                 JsonConvert.DeserializeObject<List<ElementLoadResponse>>(elementResultJson);
             //Debug.Log("レスポンス : "+response);
             // 必要な大きさで配列を確保
-            this.tileX = new int[elementResponse.Count];
-            this.tileY = new int[elementResponse.Count];
-            this.tileType = new int[elementResponse.Count];
+            this.eleX = new int[elementResponse.Count];
+            this.eleY = new int[elementResponse.Count];
+            this.eleType = new int[elementResponse.Count];
             Debug.Log(elementResponse.Count);
-            GameCtrler.InitTile(elementResponse.Count);
+            int startCount = 0;
+            int goalCount = 0;
             for (int i = 0; i < elementResponse.Count; i++)
             {
-                Debug.Log("レスポンス：" + elementResponse[i].X);  //  0になっていた
+                if (elementResponse[i].Type == 0)
+                {
+                    goalCount++;
+                }
+                else
+                {
+                    startCount++;
+                }
+            }
+            GameCtrler.InitElement(startCount,goalCount);
+            for (int i = 0; i < elementResponse.Count; i++)
+            {
+                Debug.Log("レスポンス：" + elementResponse[i].X+" " + elementResponse[i].Y + " " + elementResponse[i].Type );  //  0になっていた
                 this.eleX[i] = elementResponse[i].X;
                 this.eleY[i] = elementResponse[i].Y;
                 this.eleType[i] = elementResponse[i].Type;
                 Debug.Log("変数：" + this.TileX[i]);           //  0になっていた
-                GameCtrler.GetElementData(tileX[i], tileY[i], tileType[i], i);
+                GameCtrler.GetElementData(eleX[i], eleY[i], eleType[i], i);
             }
         }
         yield return paletteRequest.SendWebRequest();
@@ -380,16 +393,14 @@ public class NetworkManager : MonoBehaviour
                 JsonConvert.DeserializeObject<List<PaletteLoadResponse>>(paletteResultJson);
             //Debug.Log("レスポンス : "+response);
             // 必要な大きさで配列を確保
-            this.tileX = new int[paletteResponse.Count];
-            this.tileY = new int[paletteResponse.Count];
-            this.tileType = new int[paletteResponse.Count];
+            this.paletteType = new int[paletteResponse.Count];
             Debug.Log(paletteResponse.Count);
-            GameCtrler.InitTile(paletteResponse.Count);
+            GameCtrler.InitPalette(paletteResponse.Count);
             for (int i = 0; i < paletteResponse.Count; i++)
             {
                 this.paletteType[i] = paletteResponse[i].Type;
                 Debug.Log("変数：" + this.TileX[i]);           //  0になっていた
-                GameCtrler.GetPaletteData(tileType[i]);
+                GameCtrler.GetPaletteData(paletteType[i]);
             }
         }
         result?.Invoke(isSuccess);

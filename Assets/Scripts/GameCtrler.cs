@@ -38,7 +38,8 @@ public class GameCtrler : MonoBehaviour
     static public int[] goalElementType;
 
     static public int[] palette;
-    
+    static private int paletteLen = 0;
+
     int[][] tileInfo = new int [][] { new int[] { },
         new int[]{ 1,1,1,1,1 },
         new int[]{ 1,1,1,1,1 },
@@ -301,9 +302,9 @@ public class GameCtrler : MonoBehaviour
         {
             //Debug.Log(tileType.Length);
             //Debug.Log(tileType[tile]);
-            eTileCount++;
             if (tileType[tile] != 99)
             {
+                eTileCount++;
                 tileType[tile]++;
             }
             tileManager.SetTile(tileX[tile], tileY[tile], tileType[tile], eTileCount);
@@ -512,6 +513,21 @@ public class GameCtrler : MonoBehaviour
         tileY = new int[count];
         tileType = new int[count];
     }
+    static public void InitElement(int start,int goal)
+    {
+        goalElementX = new int[goal];
+        goalElementY = new int[goal];
+        goalElementType = new int[goal];
+        startElementX = new int[start];
+        startElementY = new int[start];
+        startElementType = new int[start];
+    }
+    static public void InitPalette(int count)
+    {
+        tileX = new int[count];
+        tileY = new int[count];
+        tileType = new int[count];
+    }
     static public void GetTileData(int x, int y, int type,int i) 
     {
         Debug.Log(x);
@@ -523,9 +539,19 @@ public class GameCtrler : MonoBehaviour
     static public void GetElementData(int x, int y, int type, int i)
     {
         Debug.Log(x);
-        tileX[i] = x;
-        tileY[i] = y;
-        tileType[i] = type;
+        
+        if(type== 0)
+        {
+            goalElementX[i] = x;
+            goalElementY[i] = y;
+            goalElementType[i] = type;
+        }
+        else
+        {
+            startElementX[i] = x;
+            startElementY[i] = y;
+            startElementType[i] = type;
+        }
         //Debug.Log("タイル情報スタンバイ");
     }
     static public void GetPaletteData(int type)
@@ -533,7 +559,8 @@ public class GameCtrler : MonoBehaviour
         //Debug.Log(x);
         //tileX[i] = x;
         //tileY[i] = y;
-        //tileType[i] = type;
+        palette[paletteLen] = type;
+        paletteLen++;
         //Debug.Log("タイル情報スタンバイ");
     }
 }

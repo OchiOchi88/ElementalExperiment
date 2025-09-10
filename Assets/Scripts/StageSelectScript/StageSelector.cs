@@ -9,6 +9,7 @@ using System;
 using static RegistUserRepuest;
 using UnityEngine.Networking;
 using JetBrains.Annotations;
+using System.Xml.Linq;
 
 public class StageSelector : MonoBehaviour
 {
@@ -24,7 +25,7 @@ public class StageSelector : MonoBehaviour
     Color col = new Color(0, 0, 0);
     RectTransform rtf;
 
-    private int lvl;    //  自分のステージデータ
+    private int myLvl;    //  自分のステージデータ
     private string apiToken;    //  APIトークン
 
     //  プロパティ
@@ -39,26 +40,53 @@ public class StageSelector : MonoBehaviour
     {
         get
         {
-            return this.lvl;
+            return this.myLvl;
         }
     }
     void Start()
     {
-        (string name, int lvl) = NetworkManager.Instance.IndexUserData();
-        maxStage = lvl + 1;
-        Debug.Log(maxStage);
+
+        StartCoroutine(NetworkManager.Instance.IndexUserData(
+result =>
+{     // 登録終了後の処理
+    if (result == true)
+    {
+        StartCoroutine(NetworkManager.Instance.LoadStageCount(
+            result =>
+            {
+                if (result == true)
+                {
+                    maxStage = GameCtrler.stageCount;
+                    SetButton();
+                }
+                else
+                {
+                    Debug.Log("セーブデータの読み込みに失敗しました");
+                }
+            }
+            ));
+
+    }
+    else
+    {
+        Debug.Log("セーブデータの読み込みに失敗しました");
+    }
+}));
+    }
+    private void SetButton() {
+        myLvl = NetworkManager.stageData + 1;
 
         rtf = GetComponent<RectTransform>();
         rtf.anchoredPosition = new Vector3(0, 0, 0);
         isChanged = false;
-        int fraction = maxStage % 10;
+        int fraction = myLvl % 10;
         if (fraction == 0)
         {
-            page = maxStage / 10 - 1;
+            page = myLvl / 10 - 1;
         }
         else
         {
-            page = maxStage / 10;
+            page = myLvl / 10;
         }
         SettingStage();
         backBtutton.interactable = false;
@@ -82,7 +110,7 @@ public class StageSelector : MonoBehaviour
         int fraction;
         if (nowPage >= page)
         {
-            fraction = maxStage % 10;
+            fraction = myLvl % 10;
             if(fraction == 0)
             {
                 fraction = 10;

@@ -15,12 +15,7 @@ public class ResultManager : MonoBehaviour
         enabled = true;
         GameCtrler gc = FindObjectOfType<GameCtrler>();
         gc.StageClear();
-        bool isLast = gc.IsLast();
-        if (isLast)
-        {
-            LastStageText lst = FindObjectOfType<LastStageText>();
-            lst.LastStageClear();
-        }
+
         //Debug.Log("クリア画面表示完了判定");
         int nowLvl = NetworkManager.LoadUserLvl();
         Debug.Log("今のところのステージ進捗:" + nowLvl);
@@ -29,15 +24,36 @@ public class ResultManager : MonoBehaviour
         {
             int myAchieve = NetworkManager.LoadUserAchievement();
             string myName = NetworkManager.LoadUserName();
+            nowLvl++;
+            Debug.Log("自分の名前：" + myName);
             // ユーザーデータを更新して画面も更新
             StartCoroutine(NetworkManager.Instance.UpdateUser(
                 myName,       // 名前
-                nowLvl + 1,              // レベル
+                nowLvl,              // レベル
 　　　　　      result =>
             {     // 登録終了後の処理
                 if (result == true)
                 {
+
                     Debug.Log("クリアステージ情報更新が正常に終了しました。");
+                    StartCoroutine(NetworkManager.Instance.LoadStageCount(
+                        result => {                          //登録終了後の処理
+                        if (result == true)
+                        {
+                            Debug.Log("ステージ数読み込み成功");
+                            bool isLast = gc.IsLast();
+                            if (isLast)
+                            {
+                                LastStageText lst = FindObjectOfType<LastStageText>();
+                                lst.LastStageClear();
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("ステージ数読み込み失敗");
+                        }
+                    }));
+                    
                 }
                 else
                 {
@@ -45,10 +61,31 @@ public class ResultManager : MonoBehaviour
                 }
             }));
         }
+        else
+        {
+            StartCoroutine(NetworkManager.Instance.LoadStageCount(
+                result => {                          //登録終了後の処理
+                if (result == true)
+                {
+                    Debug.Log("ステージ数読み込み成功");
+                    bool isLast = gc.IsLast();
+                    if (isLast)
+                    {
+                        LastStageText lst = FindObjectOfType<LastStageText>();
+                        lst.LastStageClear();
+                    }
+                }
+                else
+                {
+                    Debug.Log("ステージ数読み込み失敗");
+                }
+            }));
+        }
     }
     public void Retry()
     {
         stage = GameCtrler.stage;
+        StageSelector.startStage = GameCtrler.stage;
         GameCtrler gc = FindObjectOfType<GameCtrler>();
         //gc.SetStart();
         Initiate.Fade("PuzzleScene", col, 2.0f);
@@ -58,6 +95,7 @@ public class ResultManager : MonoBehaviour
     {
         GameCtrler gc = FindObjectOfType<GameCtrler>();
         bool isexist = gc.NextStage();
+
         if (isexist)
         {
             stage = GameCtrler.stage;

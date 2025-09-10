@@ -7,6 +7,7 @@ using static RegistUserRepuest;
 using UnityEngine.Networking;
 using System.IO;
 using Unity.VisualScripting.Antlr3.Runtime;
+using System.Linq;
 
 
 public class NetworkManager : MonoBehaviour
@@ -33,6 +34,7 @@ public class NetworkManager : MonoBehaviour
     private int[] paletteType;
     static public string nameData;
     static public int stageData;
+    private int count;
 
     //  プロパティ
     public string Token
@@ -42,7 +44,13 @@ public class NetworkManager : MonoBehaviour
             return this.apiToken;
         }
     }
-
+    public int Count
+    {
+        get
+        {
+            return this.count;
+        }
+    }
 
     public string Name
     {
@@ -205,6 +213,7 @@ public class NetworkManager : MonoBehaviour
         reader.Close();
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
         this.userName = saveData.Name;
+        this.apiToken = saveData.Token;
         nameData = userName;
         //stage = saveData.Stage;
         Debug.Log("APIToken : " + Token);
@@ -212,19 +221,19 @@ public class NetworkManager : MonoBehaviour
     }
 
     // ユーザー情報を読み込む
-    public (string, int) IndexUserData()
+    public IEnumerator IndexUserData(Action<bool> result)
     {
         
         //送信
         UnityWebRequest request = UnityWebRequest.Post(
                     API_BASE_URL + "users/index", "", "application/json");
-        request.SetRequestHeader("Authorization", "Bearer " + this.apiToken);
-
-        //yield return request.SendWebRequest();
-
+        request.SetRequestHeader("Authorization", "Bearer " + this.apiToken);;
+        yield return request.SendWebRequest();
+        bool isSuccess = false;
         if (request.result == UnityWebRequest.Result.Success
          && request.responseCode == 200)
         {
+            isSuccess = true;
             //通信が成功した場合、返ってきたJSONをオブジェクトに変換
             string resultJson = request.downloadHandler.text;
 
@@ -232,25 +241,27 @@ public class NetworkManager : MonoBehaviour
                 JsonConvert.DeserializeObject<IndexUserResponse>(resultJson);
 
             // すぐにアクセスできるようにゲーム内に情報を保持しておく
-            nameData = response.Name;
-            stageData = response.Stage;
+            nameData = response.name;
+            stageData = response.stage;
             Debug.Log("Token設置完了");
+            Debug.Log("response.stage:" + response.stage);
         }
 
         if (!File.Exists(Application.persistentDataPath + "/saveData.json"))
         {
-            return (null,0);
+            isSuccess = false;
         }
         var reader =
                    new StreamReader(Application.persistentDataPath + "/saveData.json");
         Debug.Log(Application.persistentDataPath + "/saveData.json");
+        Debug.Log(request.responseCode);
         string json = reader.ReadToEnd();
         reader.Close();
         SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
         this.userName = saveData.Name;
         nameData = userName;
         apiToken = saveData.Token;
-        return (nameData, stageData);
+        result?.Invoke(isSuccess);
     }
 
     // ユーザーのレベル(クリアステージ数)を詳細に読み込む
@@ -267,26 +278,58 @@ public class NetworkManager : MonoBehaviour
     {
         return nameData;
     }
-
-    //ユーザー情報更新
-    public IEnumerator UpdateUser(string name, int stage, Action<bool> result)
+    //ユーザーのステージ情報更新
+    public IEnumerator LevelUp(string name, int stage, Action<bool> result)
     {
         //サーバーに送信するオブジェクトを作成
         UpdateUserRequest requestData = new UpdateUserRequest();
-        requestData.Name = name;
-        requestData.Stage = stage;
-        //サーバーに送信するオブジェクトをJSONに変換
-        string json = JsonConvert.SerializeObject(requestData);
-        Debug.Log("送信するJSONデータ : "+json + "<-" + requestData.Name + "," + requestData.Stage);
-        Debug.Log("APIToken : " + apiToken);
+        requestData.name = name;
+        requestData.stage = stage;
+        Debug.Log("APIToken : " + this.apiToken);
         //送信
-        UnityWebRequest request = UnityWebRequest.Post(
-                    API_BASE_URL + "users/update", json, "application/json");
+        UnityWebRequest request = new UnityWebRequest(API_BASE_URL + "users/update", "POST");
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
         request.SetRequestHeader("Authorization", "Bearer " + this.apiToken);
 
         yield return request.SendWebRequest();
 
         bool isSuccess = false;
+        Debug.Log("レスポンス:" + request.responseCode);
+        if (request.result == UnityWebRequest.Result.Success
+         && request.responseCode == 200)
+        {
+            // 通信が成功した場合、ファイルに更新したユーザー名を保存
+            this.userName = name;
+            nameData = userName;
+            stageData = stage;
+            SaveUserData();
+            isSuccess = true;
+        }
+
+        result?.Invoke(isSuccess); //ここで呼び出し元のresult処理を呼び出す
+    }
+    //ユーザー情報更新
+    public IEnumerator UpdateUser(string name, int stage, Action<bool> result)
+    {
+        //サーバーに送信するオブジェクトを作成
+        UpdateUserRequest requestData = new UpdateUserRequest();
+        requestData.name = name;
+        requestData.stage = stage;
+        //サーバーに送信するオブジェクトをJSONに変換
+        string json = JsonConvert.SerializeObject(requestData);
+        Debug.Log("送信するJSONデータ : "+json + "<-" + requestData.name + "," + requestData.stage);
+        Debug.Log("APIToken : " + apiToken);
+        //送信
+        UnityWebRequest request = UnityWebRequest.Post(
+                    API_BASE_URL + "users/update", json, "application/json");
+        request.downloadHandler = new DownloadHandlerBuffer();
+        request.SetRequestHeader("Authorization", "Bearer " + this.apiToken);
+
+        yield return request.SendWebRequest();
+
+        bool isSuccess = false;
+        Debug.Log("レスポンス:" + request.responseCode);
         if (request.result == UnityWebRequest.Result.Success
          && request.responseCode == 200)
         {
@@ -372,12 +415,12 @@ public class NetworkManager : MonoBehaviour
             GameCtrler.InitElement(startCount,goalCount);
             for (int i = 0; i < elementResponse.Count; i++)
             {
-                Debug.Log("レスポンス：" + elementResponse[i].X+" " + elementResponse[i].Y + " " + elementResponse[i].Type );  //  0になっていた
+                Debug.Log("レスポンス：" + elementResponse[i].X+" " + elementResponse[i].Y + " " + elementResponse[i].Type );
                 this.eleX[i] = elementResponse[i].X;
                 this.eleY[i] = elementResponse[i].Y;
                 this.eleType[i] = elementResponse[i].Type;
                 Debug.Log("変数：" + this.TileX[i]);           //  0になっていた
-                GameCtrler.GetElementData(eleX[i], eleY[i], eleType[i], i);
+                GameCtrler.GetElementData(eleX[i], eleY[i], eleType[i]);
             }
         }
         yield return paletteRequest.SendWebRequest();
@@ -408,5 +451,30 @@ public class NetworkManager : MonoBehaviour
     public (int[], int[], int[]) SendTileData()
     {
         return (tileX, tileY, tileType);
+    }
+    // 総ステージ数を読み込む
+    public IEnumerator LoadStageCount(Action<bool> result)
+    {
+        //送信
+        UnityWebRequest Request = UnityWebRequest.Get(
+                    API_BASE_URL + "stages/count");
+        yield return Request.SendWebRequest();
+        bool isSuccess = false;
+        Debug.Log(Request.responseCode);
+        if (Request.result == UnityWebRequest.Result.Success
+         && Request.responseCode == 200)
+        {
+            isSuccess = true;
+            //通信が成功した場合、返ってきたJSONをオブジェクトに変換
+            string ResultJson = Request.downloadHandler.text;
+            Debug.Log(ResultJson);
+            //StageCountResponse Response =
+              //  JsonConvert.DeserializeObject<StageCountResponse>(ResultJson);
+            //Debug.Log("レスポンス : "+response);
+            //this.count = int.Parse(Response);
+            count = int.Parse(ResultJson);
+            GameCtrler.GetStageCount(count);
+        }
+        result?.Invoke(isSuccess);
     }
 }

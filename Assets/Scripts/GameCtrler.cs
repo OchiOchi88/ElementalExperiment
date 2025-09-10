@@ -39,6 +39,9 @@ public class GameCtrler : MonoBehaviour
 
     static public int[] palette;
     static private int paletteLen = 0;
+    static public int stageCount = 0;
+    static private int startElemCount = 0;
+    static private int goalElemCount = 0;
 
     int[][] tileInfo = new int [][] { new int[] { },
         new int[]{ 1,1,1,1,1 },
@@ -242,6 +245,8 @@ public class GameCtrler : MonoBehaviour
                     if (result == true)
                     {
                         Debug.Log("ステージ読み込み成功");
+                        startElemCount = 0;
+                        goalElemCount = 0;
                         GenerateStage();
                     }
                     else
@@ -311,16 +316,11 @@ public class GameCtrler : MonoBehaviour
         }
 
         //  パレットの生成
-        int tileKind = 0;
-        int tilePalced = 0;
-        foreach (int tile in tileInfo[stage])
+        int tilePlaced = 0;
+        foreach (int tile in palette)
         {
-            if (tile == 1)
-            {
-                tilePieceManager.SetTilePiece(tileKind, tilePalced);
-                tilePalced++;
-            }
-            tileKind++;
+            tilePieceManager.SetTilePiece(tile, tilePlaced);
+                tilePlaced++;
         }
         //for (int i = 0; i < tileinfo[stage]; i++)
         //{
@@ -374,16 +374,12 @@ public class GameCtrler : MonoBehaviour
         //        }
         //    }
         //}
-        int tileKind = 0;
-        int tilePalced = 0;
-        foreach (int tile in tileInfo[stage])
+        //  パレットの生成
+        int tilePlaced = 0;
+        foreach (int tile in palette)
         {
-            if (tile == 1)
-            {
-                tilePieceManager.SetTilePiece(tileKind, tilePalced);
-                tilePalced++;
-            }
-            tileKind++;
+            tilePieceManager.SetTilePiece(tile, tilePlaced);
+            tilePlaced++;
         }
         //for (int i = 0; i < tileinfo[stage]; i++)
         //{
@@ -399,21 +395,27 @@ public class GameCtrler : MonoBehaviour
         goalElementManager.Restart();
         goalCount = 0;
 
-        //  元素の生成
-        int ec = 0;
-        for(int j = 0; j < stage; j++) 
+        for(int i = 0; i < startElementType.Length; i++)
         {
-            for (int i = 0; i < elementCount[j]; i++)
-            {
-                ec++;
-            }
+            elementManager.SetElement(startElementX[i], startElementY[i],i, startElementType[i], gc);
+            goalElementManager.SetElement(goalElementX[i], goalElementY[i], i);
         }
-        for (int i = 0; i < elementCount[stage]; i++)
-        {
-            goalElementManager.SetElement(elementGpos[ec, 0], elementGpos[ec, 1], i);
-            elementManager.SetElement(elementSpos[ec, 0], elementSpos[ec, 1], i, elementSpos[ec, 2], gc);
-            ec++;
-        }
+
+        //  元素の生成        //int ec = 0;
+        //for(int j = 0; j < stage; j++) 
+        //{
+        //    for (int i = 0; i < elementCount[j]; i++)
+        //    {
+        //        ec++;
+        //    }
+        //}
+        //for (int i = 0; i < elementCount[stage]; i++)
+        //{
+        //    goalElementManager.SetElement(elementGpos[ec, 0], elementGpos[ec, 1], i);
+        //    elementManager.SetElement(elementSpos[ec, 0], elementSpos[ec, 1], i, elementSpos[ec, 2], gc);
+        //    ec++;
+        //}
+
     }
     public void GetElementsComp(ElementMover em)
     {
@@ -442,7 +444,7 @@ public class GameCtrler : MonoBehaviour
     {
         goalCount++;
         Debug.Log(goalCount);
-        if (goalCount >= elementCount[stage])
+        if (goalCount >= goalElementType.Length)
         {
             Debug.Log("クリア判定");
             pauseButton.SetActive(false);
@@ -452,7 +454,7 @@ public class GameCtrler : MonoBehaviour
     }
     public bool NextStage()
     {
-        if (stage < elementCount.Length -1)
+        if (stage < stageCount)
         {
             stage++;
             return true;
@@ -464,7 +466,7 @@ public class GameCtrler : MonoBehaviour
     }
     public bool IsLast()
     {
-        if (stage >= elementCount.Length - 1)
+        if (stage >= stageCount)
         {
             return true;
         }
@@ -515,18 +517,20 @@ public class GameCtrler : MonoBehaviour
     }
     static public void InitElement(int start,int goal)
     {
+        startElemCount = 0;
+        goalElemCount = 0;
         goalElementX = new int[goal];
         goalElementY = new int[goal];
         goalElementType = new int[goal];
         startElementX = new int[start];
         startElementY = new int[start];
         startElementType = new int[start];
+        Debug.Log("Init完了:"+start + "  " + goal);
     }
     static public void InitPalette(int count)
     {
-        tileX = new int[count];
-        tileY = new int[count];
-        tileType = new int[count];
+        paletteLen = 0;
+        palette = new int[count];
     }
     static public void GetTileData(int x, int y, int type,int i) 
     {
@@ -536,21 +540,23 @@ public class GameCtrler : MonoBehaviour
         tileType[i] = type;
         //Debug.Log("タイル情報スタンバイ");
     }
-    static public void GetElementData(int x, int y, int type, int i)
+    static public void GetElementData(int x, int y, int type)
     {
-        Debug.Log(x);
-        
-        if(type== 0)
+
+        Debug.Log("受信"+x+y+type);
+        if (type== 0)
         {
-            goalElementX[i] = x;
-            goalElementY[i] = y;
-            goalElementType[i] = type;
+            goalElementX[goalElemCount] = x;
+            goalElementY[goalElemCount] = y;
+            goalElementType[goalElemCount] = type;
+            goalElemCount++;
         }
         else
         {
-            startElementX[i] = x;
-            startElementY[i] = y;
-            startElementType[i] = type;
+            startElementX[startElemCount] = x;
+            startElementY[startElemCount] = y;
+            startElementType[startElemCount] = type;
+            startElemCount++;
         }
         //Debug.Log("タイル情報スタンバイ");
     }
@@ -559,8 +565,13 @@ public class GameCtrler : MonoBehaviour
         //Debug.Log(x);
         //tileX[i] = x;
         //tileY[i] = y;
-        palette[paletteLen] = type;
+        palette[paletteLen] = type -1;
         paletteLen++;
         //Debug.Log("タイル情報スタンバイ");
+    }
+    static public void GetStageCount(int count)
+    {
+        stageCount = count;
+        Debug.Log("stageCount:" + stageCount);
     }
 }

@@ -1611,7 +1611,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c453bcc49218c3c40b44820a0f2aa36e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 152280300}
   tt: {fileID: 1274674263}
   st: {fileID: 1015027093}
   hb:

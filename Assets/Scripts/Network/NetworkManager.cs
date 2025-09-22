@@ -18,7 +18,8 @@ public class NetworkManager : MonoBehaviour
     const string API_BASE_URL = "http://localhost:8000/api/";
 #else
     //  本番環境で使用する値をセット
-    const string API_BASE_URL = "http://ge202403.japaneast.cloudapp.azure.com/api/";
+    const string API_BASE_URL = "http://localhost:8000/api/";
+    //const string API_BASE_URL = "http://ge202403.japaneast.cloudapp.azure.com/api/";
 #endif
 
     //private int userID; //  自分のユーザーID
@@ -251,16 +252,19 @@ public class NetworkManager : MonoBehaviour
         {
             isSuccess = false;
         }
-        var reader =
-                   new StreamReader(Application.persistentDataPath + "/saveData.json");
-        Debug.Log(Application.persistentDataPath + "/saveData.json");
-        Debug.Log(request.responseCode);
-        string json = reader.ReadToEnd();
-        reader.Close();
-        SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
-        this.userName = saveData.Name;
-        nameData = userName;
-        apiToken = saveData.Token;
+        else
+        {
+            var reader =
+                       new StreamReader(Application.persistentDataPath + "/saveData.json");
+            Debug.Log(Application.persistentDataPath + "/saveData.json");
+            Debug.Log(request.responseCode);
+            string json = reader.ReadToEnd();
+            reader.Close();
+            SaveData saveData = JsonConvert.DeserializeObject<SaveData>(json);
+            this.userName = saveData.Name;
+            nameData = userName;
+            apiToken = saveData.Token;
+        }
         result?.Invoke(isSuccess);
     }
 

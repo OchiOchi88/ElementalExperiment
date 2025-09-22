@@ -5,7 +5,7 @@ using UnityEngine;
 public class MakeCtrler : MonoBehaviour
 {
     [SerializeField] MakePalette makePalette;
-    [SerializeField] TileManager tuleManager;
+    [SerializeField] TileManager tileManager;
     [SerializeField] ElementManager elementManager;
 
 }

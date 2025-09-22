@@ -9,7 +9,7 @@ public class SelectingTab : MonoBehaviour
     void Update()
     {
         Camera cam = Camera.main;
-        Vector3 worldPos = cam.ViewportToWorldPoint(new Vector3(viewportPosition.x, viewportPosition.y, zOffset));
+        Vector3 worldPos = cam.ViewportToWorldPoint(new Vector3(viewportPosition.x+0.085f, viewportPosition.y+0.835f, zOffset));
         transform.position = new Vector3(worldPos.x, worldPos.y, transform.position.z);
     }
     public void ZoomIn()

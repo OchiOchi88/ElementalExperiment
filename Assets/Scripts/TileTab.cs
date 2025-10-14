@@ -14,10 +14,10 @@ public class TileTab : MonoBehaviour
     }
     public void ZoomIn()
     {
-        GetComponent<Transform>().localScale -= new Vector3(0.007f, 0.007f, 0);
+        GetComponent<Transform>().localScale -= new Vector3(0.00775f, 0.007f, 0);
     }
     public void ZoomOut()
     {
-            GetComponent<Transform>().localScale += new Vector3(0.007f, 0.007f, 0);
+            GetComponent<Transform>().localScale += new Vector3(0.00775f, 0.007f, 0);
     }
 }

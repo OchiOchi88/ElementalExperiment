@@ -18,8 +18,8 @@ public class NetworkManager : MonoBehaviour
     const string API_BASE_URL = "http://localhost:8000/api/";
 #else
     //  本番環境で使用する値をセット
-    const string API_BASE_URL = "http://localhost:8000/api/";
-    //const string API_BASE_URL = "http://ge202403.japaneast.cloudapp.azure.com/api/";
+    //const string API_BASE_URL = "http://localhost:8000/api/";
+    const string API_BASE_URL = "http://ge202403.japaneast.cloudapp.azure.com/api/";
 #endif
 
     //private int userID; //  自分のユーザーID
